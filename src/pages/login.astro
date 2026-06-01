@@ -1,0 +1,112 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Iniciar Sesión | Maaya Xíinbal">
+  <main
+    class="min-h-screen bg-maya-negro/10 flex items-center justify-center p-4"
+  >
+    <!-- Tarjeta Principal -->
+    <div
+      class="bg-maya-blanco rounded-3xl shadow-2xl w-full max-w-4xl flex flex-col md:flex-row relative overflow-hidden"
+    >
+      <!-- Botón Cerrar (X) -->
+      <a
+        href="/"
+        class="absolute top-6 right-6 text-maya-azul hover:text-maya-rojo transition-colors z-10"
+        aria-label="Cerrar"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </a>
+
+      <!-- Columna Izquierda: Imagen -->
+      <div class="md:w-1/2 p-6 md:p-8">
+        <div
+          class="w-full h-full border border-maya-negro/10 rounded-2xl overflow-hidden bg-maya-blanco aspect-square flex items-center justify-center p-2"
+        >
+          <!-- Reemplaza el src con la ruta de la imagen Yum Kaax que tienes -->
+          <img
+            src="https://cdn.pixabay.com/photo/2022/08/30/17/56/corn-god-7421631_640.png"
+            alt="Ilustración Yum Kaax"
+            class="w-full h-full object-contain rounded-xl"
+          />
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Formulario -->
+      <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+        <h1 class="text-4xl font-extrabold text-maya-azul mb-2">Login</h1>
+        <p class="text-maya-negro/70 mb-10 text-lg">
+          Inicie sesión para compartir sus experiencias.
+        </p>
+
+        <form class="space-y-6 grow flex flex-col justify-center">
+          <!-- Campo Usuario -->
+          <div class="flex flex-col">
+            <label for="username" class="text-maya-azul font-semibold mb-1"
+              >Usuario</label
+            >
+            <input
+              type="text"
+              id="username"
+              class="w-full border-b border-maya-negro/30 bg-transparent focus:outline-none focus:border-maya-azul py-2 transition-colors text-maya-negro"
+            />
+          </div>
+
+          <!-- Campo Email -->
+          <div class="flex flex-col">
+            <label for="email" class="text-maya-azul font-semibold mb-1"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              class="w-full border-b border-maya-negro/30 bg-transparent focus:outline-none focus:border-maya-azul py-2 transition-colors text-maya-negro"
+            />
+          </div>
+
+          <!-- Campo Contraseña -->
+          <div class="flex flex-col">
+            <label for="password" class="text-maya-azul font-semibold mb-1"
+              >Contraseña</label
+            >
+            <input
+              type="password"
+              id="password"
+              class="w-full border-b border-maya-negro/30 bg-transparent focus:outline-none focus:border-maya-azul py-2 transition-colors text-maya-negro"
+            />
+          </div>
+
+          <!-- Botón Entrar -->
+          <div class="pt-6">
+            <button
+              type="submit"
+              class="w-full bg-maya-azul text-white font-bold py-3.5 rounded-xl hover:opacity-90 transition-opacity shadow-md"
+            >
+              Entrar
+            </button>
+          </div>
+        </form>
+
+        <p class="text-center mt-8 text-sm text-maya-negro/60">
+          ¿No tienes una cuenta? <a
+            href="/register"
+            class="text-maya-azul font-bold hover:underline">Regístrate</a
+          >
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>
