@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import InteractiveMap from "../components/InteractiveMap.tsx";
+---
+
+<Layout title="Mapa Interactivo | Maaya Xíinbal">
+  <div class="flex flex-col min-h-screen">
+    <main class="grow flex flex-col relative">
+      <InteractiveMap client:only="react" />
+    </main>
+  </div>
+</Layout>
