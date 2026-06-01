@@ -1,0 +1,86 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  category:
+    | "Cenote"
+    | "Pueblo Mágico"
+    | "Hacienda"
+    | "Gruta"
+    | "Zona Arqueológica";
+  imageUrl: string;
+}
+
+const { title, description, category, imageUrl } = Astro.props;
+
+// Asignamos colores de tu paleta dependiendo de la categoría
+const getCategoryStyles = (cat: string) => {
+  switch (cat) {
+    case "Cenote":
+      return "bg-maya-azul text-white";
+    case "Zona Arqueológica":
+      return "bg-maya-amarillo text-maya-negro font-semibold";
+    case "Pueblo Mágico":
+      return "bg-maya-rojo text-white";
+    case "Hacienda":
+      return "bg-maya-verde text-white";
+    case "Gruta":
+      return "bg-maya-negro text-white";
+    default:
+      return "bg-gray-200 text-gray-800";
+  }
+};
+---
+
+<article
+  class="flex flex-col bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl max-w-sm border border-maya-negro/10"
+>
+  <!-- Imagen del Atractivo -->
+  <div class="relative h-48 overflow-hidden bg-maya-negro/5">
+    <img
+      src={imageUrl}
+      alt={`Fotografía de ${title}`}
+      class="w-full h-full object-cover"
+      loading="lazy"
+    />
+    <!-- Etiqueta de Categoría Flotante -->
+    <span
+      class={`absolute top-4 left-4 px-3 py-1 text-xs uppercase tracking-wider rounded-full shadow-sm ${getCategoryStyles(category)}`}
+    >
+      {category}
+    </span>
+  </div>
+
+  <!-- Contenido de la Tarjeta -->
+  <div class="p-5 flex flex-col grow">
+    <!-- Título y Descripción -->
+    <h3 class="text-xl font-bold text-maya-negro mb-2 leading-tight">
+      {title}
+    </h3>
+    <p class="text-maya-negro/80 text-sm mb-6 grow line-clamp-3">
+      {description}
+    </p>
+
+    <!-- Botón de Acción para el Mapa -->
+    <div class="mt-auto pt-4 border-t border-maya-negro/10">
+      <button
+        class="w-full flex justify-center items-center gap-2 bg-maya-negro text-white py-2.5 rounded-lg font-medium hover:bg-maya-azul transition-colors duration-300"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+          ></path>
+        </svg>
+        Ubicar en el mapa
+      </button>
+    </div>
+  </div>
+</article>

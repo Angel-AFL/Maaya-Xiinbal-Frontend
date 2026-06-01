@@ -1,0 +1,83 @@
+---
+const routes = [
+  {
+    title: "El Esplendor Puuc",
+    desc: "Recorre la arquitectura más detallada del mundo maya, desde Uxmal hasta las grutas de Loltún.",
+    color: "bg-maya-amarillo",
+    icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9",
+  },
+  {
+    title: "Aventura Subterránea",
+    desc: "Una ruta dedicada exclusivamente a los cenotes y cavernas menos explorados del centro del estado.",
+    color: "bg-maya-azul",
+    icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+  },
+  {
+    title: "Raíces y Tradición",
+    desc: "Inicia en el corazón rural, degustando gastronomía en Maxcanú y explorando las haciendas henequeneras.",
+    color: "bg-maya-rojo",
+    icon: "M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z",
+  },
+];
+---
+
+<section class="py-16 bg-maya-blanco/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-maya-negro">Rutas Pre-armadas</h2>
+      <p class="text-maya-negro/70 mt-3 max-w-2xl mx-auto">
+        Selecciona una de nuestras rutas temáticas y deja que el mapa te guíe
+        paso a paso por la península.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        routes.map((route) => (
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 hover:-translate-y-2 hover:shadow-lg transition-all duration-300 group">
+            <div
+              class={`w-14 h-14 ${route.color} text-white rounded-lg flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform`}
+            >
+              <svg
+                class="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d={route.icon}
+                />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-maya-negro mb-3">
+              {route.title}
+            </h3>
+            <p class="text-sm text-maya-negro/70 mb-6">{route.desc}</p>
+            <a
+              href="#mapa"
+              class="text-sm font-bold text-maya-verde hover:text-maya-negro transition-colors inline-flex items-center gap-1"
+            >
+              Ver ruta en el mapa
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

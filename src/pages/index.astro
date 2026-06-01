@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ExperiencieCard from "../components/ExperiencieCard.astro";
+import GridExperiences from "../components/GridExperiences.astro";
+import HeroSlider from "../components/HeroSlider.astro";
+import type { Slide } from "../components/HeroSlider.astro";
+import AboutProject from "../components/AboutProject.astro";
+import ChatbotShowcase from "../components/ChatbotShowcase.astro";
+import SuggestedRoutes from "../components/SuggestedRoutes.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import Testimonials from "../components/Testimonials.astro";
+
+const heroData: Slide[] = [
+  {
+    imageUrl:
+      "https://wallpapercat.com/w/full/0/0/5/153743-2048x1365-desktop-hd-mexico-background-photo.jpg",
+    title: "Experiencias de Maaya-Xíinbal",
+    subtitle:
+      "Encuentra caminos ancestrales y experiencias turísticas inolvidables.",
+    ctaText: "Ver mapa interactivo",
+    ctaLink: "#rutas",
+  },
+  {
+    imageUrl:
+      "https://wallpapers.com/images/hd/mexico-pictures-66a3toseb67lc3ip.jpg",
+    title: "El Legado de los Pueblos Mágicos",
+    subtitle:
+      "Viaja en el tiempo a través de la arquitectura y el esplendor de los pueblos mágicos en Yucatán.",
+    ctaText: "Conocer Más",
+    ctaLink: "#haciendas",
+  },
+  {
+    imageUrl: "https://cdn.wallpapersafari.com/67/28/G79ac8.jpg",
+    title: "Descubre el Corazón de Maxcanú",
+    subtitle:
+      "Inicia tu recorrido explorando la historia, cultura y los paisajes rurales de nuestra región.",
+    ctaText: "Explorar experiencias",
+    ctaLink: "#mapa",
+  },
+];
+---
+
+<Layout title="Maaya Xíinbal">
+  <HeroSlider slides={heroData} autoplayInterval={7000} />
+  <AboutProject />
+  <ChatbotShowcase />
+  <HowItWorks />
+  <GridExperiences
+    title="Experiencias Turísticas"
+    subtitle="Descubre los mejores lugares que ofrece nuestra región"
+  >
+    <ExperiencieCard
+      title="Cenotes"
+      description="Oasis subterráneos de aguas cristalinas y naturaleza intacta."
+      category="Cenote"
+      imageUrl="https://images.unsplash.com/photo-1659775226523-b31d25ddb5fa?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    />
+
+    <ExperiencieCard
+      title="Pueblos Mágicos"
+      description="Tradición, cultura y colores vibrantes en cada rincón."
+      category="Pueblo Mágico"
+      imageUrl="https://images.unsplash.com/photo-1661629777811-b953606c22f3?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    />
+
+    <ExperiencieCard
+      title="Haciendas"
+      description="El esplendor del oro verde reflejado en arquitectura histórica."
+      category="Hacienda"
+      imageUrl="https://images.unsplash.com/photo-1611688615716-2c907e3e74f8?q=80&w=746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    />
+
+    <ExperiencieCard
+      title="Zonas Arqueológicas"
+      description="El legado en piedra de una civilización milenaria."
+      category="Zona Arqueológica"
+      imageUrl="https://plus.unsplash.com/premium_photo-1697730073345-fcb1cdc8334c?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    />
+
+    <ExperiencieCard
+      title="Grutas"
+      description="Aventuras subterráneas entre estalactitas y bóvedas ocultas."
+      category="Gruta"
+      imageUrl="https://www.elportalinmobiliario.com.mx/cnt-articulos/2020/06/26947885752_dca22fd388_o1.jpg"
+    />
+  </GridExperiences>
+  <SuggestedRoutes />
+  <Testimonials />
+</Layout>

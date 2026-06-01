@@ -1,0 +1,144 @@
+---
+export interface Slide {
+  imageUrl: string;
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+interface Props {
+  slides: Slide[];
+  autoplayInterval?: number;
+}
+
+const { slides, autoplayInterval = 5000 } = Astro.props;
+---
+
+<div 
+  class="relative w-full h-[92vh] min-h-125 overflow-hidden group hero-slider" 
+  data-interval={autoplayInterval}
+>
+  <!-- Contenedor de las diapositivas -->
+  <div class="relative w-full h-full slider-inner">
+    {slides.map((slide, index) => (
+      <div 
+        class={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out slide-item ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+        data-index={index}
+      >
+        <!-- Capa oscura para asegurar la legibilidad del texto -->
+        <div class="absolute inset-0 bg-maya-negro/50 z-10"></div>
+        
+        <!-- Imagen de fondo -->
+        <img 
+          src={slide.imageUrl} 
+          alt={slide.title} 
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <!-- Contenido (Texto y Botón) -->
+        <div class="relative z-20 h-full flex flex-col justify-center items-center text-center px-6 max-w-4xl mx-auto">
+          <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+            {slide.title}
+          </h1>
+          {slide.subtitle && (
+            <p class="text-lg md:text-2xl text-white mb-8 drop-shadow-md">
+              {slide.subtitle}
+            </p>
+          )}
+          {slide.ctaText && slide.ctaLink && (
+            <a 
+              href={slide.ctaLink}
+              class="bg-maya-verde text-white o px-8 py-3 rounded-full font-semibold text-lg hover:bg-maya-amarillo hover:text-maya-negro transition-colors duration-300 shadow-lg"
+            >
+              {slide.ctaText}
+            </a>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Controles: Anterior / Siguiente -->
+  <button class="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-maya-blanco/20 hover:bg-maya-blanco/40 text-white p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 prev-btn">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+  </button>
+  <button class="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-maya-blanco/20 hover:bg-maya-blanco/40 text-white p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 next-btn">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+  </button>
+
+  <!-- Indicadores (Dots) -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex space-x-3">
+    {slides.map((_, index) => (
+      <button 
+        class={`w-3 h-3 rounded-full transition-all dot-btn ${index === 0 ? 'bg-maya-amarillo scale-125' : 'bg-maya-blanco/50 hover:bg-maya-blanco'}`}
+        data-target={index}
+        aria-label={`Ir a la diapositiva ${index + 1}`}
+      ></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Lógica del Slider
+  const setupSliders = () => {
+    const sliders = document.querySelectorAll('.hero-slider');
+
+    sliders.forEach(slider => {
+      const slides = slider.querySelectorAll('.slide-item');
+      const dots = slider.querySelectorAll('.dot-btn');
+      const prevBtn = slider.querySelector('.prev-btn');
+      const nextBtn = slider.querySelector('.next-btn');
+      const intervalTime = parseInt(slider.getAttribute('data-interval') || '5000');
+      
+      let currentIndex = 0;
+      // Tipado estricto para el intervalo
+      let slideInterval: ReturnType<typeof setInterval>; 
+
+      // Tipado estricto para el parámetro index
+      const goToSlide = (index: number) => { 
+        // Ocultar slide actual
+        slides[currentIndex].classList.remove('opacity-100', 'z-10');
+        slides[currentIndex].classList.add('opacity-0', 'z-0');
+        dots[currentIndex].classList.remove('bg-maya-amarillo', 'scale-125');
+        dots[currentIndex].classList.add('bg-maya-blanco/50');
+
+        // Actualizar índice
+        currentIndex = index;
+        if (currentIndex >= slides.length) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = slides.length - 1;
+
+        // Mostrar nuevo slide
+        slides[currentIndex].classList.remove('opacity-0', 'z-0');
+        slides[currentIndex].classList.add('opacity-100', 'z-10');
+        dots[currentIndex].classList.remove('bg-maya-blanco/50');
+        dots[currentIndex].classList.add('bg-maya-amarillo', 'scale-125');
+      };
+
+      const nextSlide = () => goToSlide(currentIndex + 1);
+      const prevSlide = () => goToSlide(currentIndex - 1);
+
+      const resetInterval = () => {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, intervalTime);
+      };
+
+      // Event Listeners
+      if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
+      if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
+      
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          goToSlide(index);
+          resetInterval();
+        });
+      });
+
+      // Iniciar autoplay
+      resetInterval();
+    });
+  };
+
+  setupSliders();
+  document.addEventListener('astro:after-swap', setupSliders);
+</script>

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-maya-azul: #395c6b;
+  --color-maya-verde: #517a5e;
+  --color-maya-rojo: #9a382d;
+  --color-maya-amarillo: #cca044;
+  --color-maya-blanco: #eaddc9;
+  --color-maya-negro: #2c2e2f;
+}

@@ -1,0 +1,54 @@
+---
+const steps = [
+  {
+    num: "01",
+    title: "Explora",
+    desc: "Navega libremente por nuestro mapa interactivo descubriendo categorías.",
+  },
+  {
+    num: "02",
+    title: "Consulta",
+    desc: "Pregúntale a nuestra IA para encontrar secretos locales y organizar tus tiempos.",
+  },
+  {
+    num: "03",
+    title: "Planifica",
+    desc: "Guarda tus lugares favoritos y genera una ruta optimizada.",
+  },
+  {
+    num: "04",
+    title: "Disfruta",
+    desc: "Viaja con confianza llevando toda la información cultural en tu bolsillo.",
+  },
+];
+---
+
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-maya-negro mb-4">
+        ¿Cómo funciona Maaya Xíinbal?
+      </h2>
+      <div class="w-24 h-1 bg-maya-amarillo mx-auto rounded-full"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 relative">
+      <div
+        class="hidden lg:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-gray-200 z-0"
+      >
+      </div>
+
+      {
+        steps.map((step, index) => (
+          <div class="relative z-10 flex flex-col items-center text-center">
+            <div class="w-16 h-16 bg-maya-verde text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-md border-4 border-white mb-6">
+              {step.num}
+            </div>
+            <h3 class="text-lg font-bold text-maya-negro mb-2">{step.title}</h3>
+            <p class="text-sm text-maya-negro/70">{step.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
