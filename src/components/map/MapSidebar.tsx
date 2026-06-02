@@ -1,3 +1,5 @@
+import MaayaChat from "../map/MaayaChat";
+
 interface MapSidebarProps {
   activeFilter: string;
   setActiveFilter: (filter: string) => void;
@@ -53,19 +55,7 @@ export default function MapSidebar({
       )}
 
       {/* Asistente de IA */}
-      <div className="mt-auto pt-4 border-t border-maya-negro/10">
-        <div className="bg-maya-verde/10 p-3 rounded-xl border border-maya-verde/20 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-maya-verde flex items-center justify-center text-white font-bold">
-            IA
-          </div>
-          <div>
-            <p className="text-xs font-bold text-maya-negro">Asistente Maaya</p>
-            <p className="text-xs text-maya-negro/60">
-              ¿Qué te gustaría visitar hoy?
-            </p>
-          </div>
-        </div>
-      </div>
+      <MaayaChat />
     </div>
   );
 }
