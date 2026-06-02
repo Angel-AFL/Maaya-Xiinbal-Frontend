@@ -7,7 +7,10 @@ interface Props {
     | "Pueblo Mágico"
     | "Hacienda"
     | "Gruta"
-    | "Zona Arqueológica";
+    | "Zona Arqueológica"
+    | "Pueblo Fantasma"
+    | "Apodos de los pueblos"
+    | "Parador Turístico";
   imageUrl: string;
 }
 
@@ -19,13 +22,19 @@ const getCategoryStyles = (cat: string) => {
     case "Cenote":
       return "bg-maya-azul text-white";
     case "Zona Arqueológica":
-      return "bg-maya-amarillo text-maya-negro font-semibold";
+      return "bg-maya-amarillo text-white";
     case "Pueblo Mágico":
       return "bg-maya-rojo text-white";
     case "Hacienda":
       return "bg-maya-verde text-white";
     case "Gruta":
       return "bg-maya-negro text-white";
+    case "Pueblo Fantasma":
+      return "bg-maya-morado text-white";
+    case "Apodos de los pueblos":
+      return "bg-maya-rosa text-white";
+    case "Parador Turístico":
+      return "bg-maya-naranja text-white";
     default:
       return "bg-gray-200 text-gray-800";
   }
