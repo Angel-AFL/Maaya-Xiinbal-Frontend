@@ -1,0 +1,61 @@
+import { useState, useEffect } from "react";
+import MapSidebar from "./mapSidebar";
+import MapCanvas from "./MapCanvas";
+import type { Attraction } from "../../utils/mapHelpers";
+
+export default function InteractiveMap() {
+  const [activeFilter, setActiveFilter] = useState("Todos");
+  const [locations, setLocations] = useState<Attraction[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAttractions = async () => {
+      try {
+        const response = await fetch(import.meta.env.PUBLIC_API_URL);
+
+        if (!response.ok) {
+          throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+
+        if (responseData.success && Array.isArray(responseData.data)) {
+          setLocations(responseData.data);
+        } else {
+          throw new Error("Estructura de API irreconocible");
+        }
+      } catch (err: any) {
+        setError(err.message);
+        console.error("Error cargando el mapa:", err);
+        setLocations([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAttractions();
+  }, []);
+
+  return (
+    <div
+      className="relative w-full bg-maya-blanco/20"
+      style={{ height: "85vh" }}
+    >
+      {/* Módulo de Interfaz */}
+      <MapSidebar
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+        isLoading={isLoading}
+        error={error}
+      />
+
+      {/* Módulo del Mapa */}
+      <MapCanvas
+        locations={locations}
+        activeFilter={activeFilter}
+        isLoading={isLoading}
+      />
+    </div>
+  );
+}
