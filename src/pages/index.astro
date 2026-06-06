@@ -9,6 +9,7 @@ import ChatbotShowcase from "../components/ChatbotShowcase.astro";
 import SuggestedRoutes from "../components/SuggestedRoutes.astro";
 import HowItWorks from "../components/HowItWorks.astro";
 import Testimonials from "../components/Testimonials.astro";
+import Boton from "../components/funciones.astro"
 
 const heroData: Slide[] = [
   {
@@ -33,7 +34,7 @@ const heroData: Slide[] = [
     imageUrl: "https://cdn.wallpapersafari.com/67/28/G79ac8.jpg",
     title: "Descubre el Corazón de Maxcanú",
     subtitle:
-      "Inicia tu recorrido explorando la historia, cultura y los paisajes rurales de nuestra región.",
+      "Inicia tu recorrido explorando la historia, cultura y los paisajes rurales de nuestra region.",
     ctaText: "Explorar experiencias",
     ctaLink: "#mapa",
   },
@@ -86,4 +87,16 @@ const heroData: Slide[] = [
   </GridExperiences>
   <SuggestedRoutes />
   <Testimonials />
+  <Boton/>
 </Layout>
+
+<script type="text/javascript" is:inline>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'es',
+      includedLanguages: 'es,yua', 
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" is:inline></script>
