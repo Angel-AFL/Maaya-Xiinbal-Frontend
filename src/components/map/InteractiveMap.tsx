@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import MapSidebar from "./mapSidebar";
+import MapSidebar from "./MapSidebar";
 import MapCanvas from "./MapCanvas";
 import type { Attraction } from "../../utils/mapHelpers";
 

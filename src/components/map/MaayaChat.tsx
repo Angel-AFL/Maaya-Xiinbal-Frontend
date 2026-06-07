@@ -59,11 +59,17 @@ export default function MaayaChat() {
           onClick={() => setIsOpen(true)}
           className="w-full bg-maya-verde/10 hover:bg-maya-verde/20 transition-colors p-3 rounded-xl border border-maya-verde/20 flex items-center gap-3 text-left"
         >
-          <div className="w-8 h-8 rounded-full bg-maya-verde flex items-center justify-center text-white font-bold shrink-0">
-            IA
+          <div className="w-16 h-16 rounded-full bg-maya-verde flex items-center justify-center text-white font-bold shrink-0">
+            <img
+              src="Mayita.png"
+              alt="Mayita"
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
           <div>
-            <p className="text-xs font-bold text-maya-negro">Asistente Maaya</p>
+            <p className="text-xs font-bold text-maya-negro">
+              ¡Pregúntale a Mayita!
+            </p>
             <p className="text-xs text-maya-negro/60">
               Arma tu itinerario aquí
             </p>
@@ -74,7 +80,7 @@ export default function MaayaChat() {
           <div className="flex justify-between items-center p-2 border-b border-maya-negro/5 bg-maya-verde/10 rounded-t-xl">
             <span className="text-xs font-bold text-maya-verde flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-maya-verde animate-pulse"></div>
-              Asistente en línea
+              ¡Pregúntale a Mayita!
             </span>
             <button
               onClick={() => setIsOpen(false)}

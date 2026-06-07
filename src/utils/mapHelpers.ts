@@ -11,21 +11,34 @@ export interface Attraction {
   long: string;
 }
 
+const mayaAzul = "#395c6b";
+const mayaVerde = "#517a5e";
 const mayaRojo = "#9a382d";
 const mayaAmarillo = "#cca044";
-const mayaAzul = "#395c6b";
+const mayaBlanco = "#eaddc9";
 const mayaNegro = "#2c2e2f";
+const mayaMorado = "#654b6b";
+const mayaRosa = "#b55375";
+const mayaNaranja = "#b86a3d";
 
 export const getMarkerColor = (categoria: string) => {
   switch (categoria) {
-    case "Cultura Viva":
+    case "Pueblos Mágicos":
       return mayaRojo;
-    case "Arqueología":
+    case "Haciendas":
+      return mayaVerde;
+    case "Zonas Arqueológicas":
       return mayaAmarillo;
-    case "Cenote":
+    case "Cenotes":
       return mayaAzul;
     case "Grutas":
       return mayaNegro;
+    case "Pueblos Fantasmas":
+      return mayaMorado;
+    case "Joyas Ocultas":
+      return mayaRosa;
+    case "Paradores Turísticos":
+      return mayaNaranja;
     default:
       return "#517a5e";
   }
