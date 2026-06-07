@@ -13,7 +13,17 @@ export default function MapSidebar({
   isLoading,
   error,
 }: MapSidebarProps) {
-  const filters = ["Todos", "Cultura Viva", "Arqueología", "Cenote", "Grutas"];
+  const filters = [
+    "Todos",
+    "Pueblos Mágicos",
+    "Haciendas",
+    "Zonas Arqueológicas",
+    "Cenotes",
+    "Grutas",
+    "Pueblos Fantasmas",
+    "Joyas Ocultas",
+    "Paradores Turísticos",
+  ];
 
   return (
     <div className="absolute top-6 left-6 z-1000 w-80 bg-white/95 backdrop-blur-md border border-maya-negro/10 rounded-2xl shadow-xl p-5 hidden md:flex flex-col">
