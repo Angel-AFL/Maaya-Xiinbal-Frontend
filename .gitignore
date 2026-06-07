@@ -12,6 +12,18 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Photo and video files
+.png
+.jpg
+.jpeg
+.avif
+.gif
+.svg
+.mp4
+.mov
+.avi
+.mkv
+.webm
 
 # environment variables
 .env
