@@ -1,13 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import MapSidebar from "./MapSidebar";
 import MapCanvas from "./MapCanvas";
 import type { Attraction } from "../../utils/mapHelpers";
 
 export default function InteractiveMap() {
   const [activeFilter, setActiveFilter] = useState("Todos");
+  const [debouncedFilter, setDebouncedFilter] = useState("Todos");
   const [locations, setLocations] = useState<Attraction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const handleFilterChange = useCallback((filter: string) => {
+    setActiveFilter(filter);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      setDebouncedFilter(filter);
+    }, 150);
+  }, []);
+
+  useEffect(() => {
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+  }, []);
 
   useEffect(() => {
     const fetchAttractions = async () => {
@@ -49,22 +63,19 @@ export default function InteractiveMap() {
 
   return (
     <div
-      className="relative w-full bg-maya-blanco/20"
-      style={{ height: "85vh" }}
+      className="relative w-full flex-1 bg-maya-blanco/20"
     >
-      {/* Módulo de Interfaz */}
       <MapSidebar
         activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
+        setActiveFilter={handleFilterChange}
         isLoading={isLoading}
         error={error}
         locations={locations}
       />
 
-      {/* Módulo del Mapa */}
       <MapCanvas
         locations={locations}
-        activeFilter={activeFilter}
+        activeFilter={debouncedFilter}
         isLoading={isLoading}
       />
     </div>

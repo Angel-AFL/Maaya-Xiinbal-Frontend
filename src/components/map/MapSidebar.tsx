@@ -1,3 +1,4 @@
+import { useMemo, memo } from "react";
 import type { Attraction } from "../../utils/mapHelpers";
 import MaayaChat from "../map/MaayaChat";
 
@@ -9,29 +10,29 @@ interface MapSidebarProps {
   locations: Attraction[];
 }
 
-export default function MapSidebar({
+const filters = [
+  "Todos",
+  "Pueblos Mágicos",
+  "Haciendas",
+  "Zonas Arqueológicas",
+  "Cenotes",
+  "Grutas",
+  "Pueblos Fantasmas",
+  "Joyas Ocultas",
+  "Paradores Turísticos",
+];
+
+function MapSidebar({
   activeFilter,
   setActiveFilter,
   isLoading,
   error,
   locations,
 }: MapSidebarProps) {
-  const filters = [
-    "Todos",
-    "Pueblos Mágicos",
-    "Haciendas",
-    "Zonas Arqueológicas",
-    "Cenotes",
-    "Grutas",
-    "Pueblos Fantasmas",
-    "Joyas Ocultas",
-    "Paradores Turísticos",
-  ];
-
-  const filteredLocations =
-    activeFilter === "Todos"
-      ? locations
-      : locations.filter((loc) => loc.categoria === activeFilter);
+  const filteredLocations = useMemo(() => {
+    if (activeFilter === "Todos") return locations;
+    return locations.filter((loc) => loc.categoria === activeFilter);
+  }, [locations, activeFilter]);
 
   return (
     <div className="absolute top-6 left-6 z-1000 w-80 bg-white/95 backdrop-blur-md border border-maya-negro/10 rounded-2xl shadow-xl p-5 hidden md:flex flex-col" style={{ maxHeight: "calc(100vh - 3rem)" }}>
@@ -42,7 +43,6 @@ export default function MapSidebar({
         Descubre joyas ocultas y rutas ancestrales.
       </p>
 
-      {/* Filtros */}
       <div className="flex flex-wrap gap-2 mb-4">
         {filters.map((filter) => (
           <button
@@ -59,7 +59,6 @@ export default function MapSidebar({
         ))}
       </div>
 
-      {/* Estados de Carga y Error */}
       {isLoading && (
         <div className="text-sm text-maya-azul font-semibold animate-pulse mb-4">
           Cargando atractivos...
@@ -72,7 +71,6 @@ export default function MapSidebar({
         </div>
       )}
 
-      {/* Lista de atractivos */}
       {!isLoading && !error && (
         <div className="flex-1 overflow-y-auto min-h-0 mb-4">
           <h3 className="text-xs font-semibold text-maya-negro/50 uppercase tracking-wider mb-2">
@@ -90,6 +88,7 @@ export default function MapSidebar({
                     <img
                       src={loc.imagenes[0]}
                       alt={loc.nombre}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -112,8 +111,15 @@ export default function MapSidebar({
         </div>
       )}
 
-      {/* Asistente de IA */}
       <MaayaChat />
     </div>
   );
 }
+
+export default memo(MapSidebar, (prev, next) =>
+  prev.activeFilter === next.activeFilter &&
+  prev.isLoading === next.isLoading &&
+  prev.error === next.error &&
+  prev.locations === next.locations &&
+  prev.setActiveFilter === next.setActiveFilter
+);
