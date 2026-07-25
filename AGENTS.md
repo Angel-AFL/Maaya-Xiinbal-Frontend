@@ -1,0 +1,121 @@
+# AGENTS.md
+
+## Project Overview
+
+**Maaya Xíinbal** is a tourism and cultural exploration platform for the Yucatán Peninsula (Maxcanú region). It serves as an interactive guide featuring an AI chatbot, interactive map, and curated attraction categories.
+
+## Tech Stack
+
+| Category | Technology | Version |
+|---|---|---|
+| Meta-Framework | Astro | ^6.4.2 |
+| UI Library | React | ^19.2.6 |
+| Styling | TailwindCSS | ^4.3.0 |
+| Language | TypeScript | strict |
+| Maps | Leaflet + React-Leaflet | ^1.9.4 / ^5.0.0 |
+| Runtime | Node.js | >= 22.12.0 |
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+
+**Note:** There is no lint or typecheck script configured. To typecheck, run `npx astro check`.
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── *.astro              # Astro components (SSR/static)
+│   └── map/                 # React components (client:only)
+│       ├── InteractiveMap.tsx
+│       ├── MaayaChat.tsx
+│       ├── MapCanvas.tsx
+│       └── MapSidebar.tsx
+├── layouts/
+│   └── Layout.astro         # Base HTML shell (Header + slot + Footer)
+├── pages/
+│   ├── index.astro          # Homepage "/"
+│   ├── map.astro            # Interactive map "/map"
+│   ├── login.astro          # Login form "/login"
+│   └── register.astro       # Registration form "/register"
+├── styles/
+│   └── global.css           # Tailwind imports + Maya theme colors
+└── utils/
+    └── mapHelpers.ts        # Attraction types, marker colors, Leaflet icons
+```
+
+## Architecture
+
+- **Astro** renders static/SSR content: landing page, layout, cards, forms
+- **React** handles client-side interactive components: map, chatbot
+- React components use `client:only="react"` directive on the map page
+- `.astro` files use frontmatter (`---`) for imports and logic; template below for HTML output
+- `Layout.astro` wraps all pages with Header + Footer
+- Global styles are imported once in `Layout.astro`
+
+## Maya Theme Colors (Tailwind v4 @theme)
+
+| Token | Hex |
+|---|---|
+| `maya-azul` | `#395c6b` |
+| `maya-verde` | `#517a5e` |
+| `maya-rojo` | `#9a382d` |
+| `maya-amarillo` | `#cca044` |
+| `maya-blanco` | `#eaddc9` |
+| `maya-negro` | `#2c2e2f` |
+| `maya-morado` | `#654b6b` |
+| `maya-rosa` | `#b55375` |
+| `maya-naranja` | `#b86a3d` |
+
+## Key Conventions
+
+- **Imports in `.astro` files**: Use relative paths (`../components/Header.astro`)
+- **Imports in `.tsx` files**: Use relative paths (`../../utils/mapHelpers`)
+- **CSS classes**: Use Tailwind utility classes with `maya-*` theme tokens (e.g., `bg-maya-verde`, `text-maya-blanco`)
+- **Client-side scripts**: Written inline in `.astro` `<script>` tags (not external modules)
+- **Language**: UI text is in Spanish; bilingual toggle (ES / Yucatec Maya) via Google Translate cookies
+- **API**: `PUBLIC_API_URL` env var points to backend; accessed via `import.meta.env.PUBLIC_API_URL`
+- **API response shape**: `{ success: boolean, data: Attraction[] }`
+- **Attraction interface**: Defined in `src/utils/mapHelpers.ts` with fields: `id`, `nombre`, `descripcion`, `categoria`, `municipio`, `estado`, `lat`, `long`
+
+## File Patterns
+
+### `.astro` component
+```astro
+---
+import Component from "../path/Component.astro";
+---
+
+<div class="tailwind-classes">
+  <Component />
+</div>
+
+<script>
+  // Client-side JS (vanilla, no framework)
+</script>
+```
+
+### `.tsx` React component
+```tsx
+import { useState } from "react";
+
+export default function MyComponent() {
+  return <div className="tailwind-classes">...</div>;
+}
+```
+
+## External Dependencies
+
+- **Google Translate API**: Loaded via script in Header for ES/MAY toggle; custom CSS hides Google's default banners/popups
+- **Leaflet CSS**: Must be imported in map-related pages for marker rendering
+
+## Environment Variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `PUBLIC_API_URL` | Yes | Backend API endpoint for attractions data |
