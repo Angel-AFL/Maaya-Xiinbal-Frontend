@@ -1,0 +1,137 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Mi Perfil | Maaya Xíinbal">
+  <main class="min-h-screen bg-maya-negro/10 flex items-center justify-center p-4">
+    <div class="bg-maya-blanco rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden">
+      <div class="bg-maya-verde px-8 py-10 text-white">
+        <div class="flex items-center gap-5">
+          <div id="profile-avatar" class="w-20 h-20 rounded-full bg-maya-blanco flex items-center justify-center text-maya-verde text-3xl font-extrabold shrink-0">
+          </div>
+          <div>
+            <h1 id="profile-name" class="text-2xl font-extrabold"></h1>
+            <p id="profile-email" class="text-maya-blanco/80 text-sm mt-1"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8">
+        <div id="profile-error" class="hidden bg-maya-rojo/10 border border-maya-rojo/30 text-maya-rojo rounded-xl px-4 py-3 text-sm mb-6"></div>
+        <div id="profile-loading" class="text-center py-12 text-maya-azul font-semibold animate-pulse">
+          Cargando perfil...
+        </div>
+
+        <div id="profile-content" class="hidden">
+          <h2 class="text-lg font-bold text-maya-azul mb-6 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            Información Personal
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-maya-negro/10 pb-3">
+              <span class="text-maya-negro/60 text-sm font-medium">Nombre</span>
+              <span id="info-nombre" class="text-maya-negro font-semibold"></span>
+            </div>
+            <div class="flex items-center justify-between border-b border-maya-negro/10 pb-3">
+              <span class="text-maya-negro/60 text-sm font-medium">Apellido</span>
+              <span id="info-apellido" class="text-maya-negro font-semibold"></span>
+            </div>
+            <div class="flex items-center justify-between border-b border-maya-negro/10 pb-3">
+              <span class="text-maya-negro/60 text-sm font-medium">Correo</span>
+              <span id="info-correo" class="text-maya-negro font-semibold"></span>
+            </div>
+            <div class="flex items-center justify-between border-b border-maya-negro/10 pb-3">
+              <span class="text-maya-negro/60 text-sm font-medium">Teléfono</span>
+              <span id="info-telefono" class="text-maya-negro font-semibold"></span>
+            </div>
+          </div>
+
+          <h2 class="text-lg font-bold text-maya-azul mb-6 mt-8 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Ubicación
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-maya-negro/10 pb-3">
+              <span class="text-maya-negro/60 text-sm font-medium">Latitud</span>
+              <span id="info-lat" class="text-maya-negro font-semibold"></span>
+            </div>
+            <div class="flex items-center justify-between border-b border-maya-negro/10 pb-3">
+              <span class="text-maya-negro/60 text-sm font-medium">Longitud</span>
+              <span id="info-long" class="text-maya-negro font-semibold"></span>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mt-8">
+            <a
+              href="/map"
+              class="flex-1 bg-maya-verde text-white text-center font-bold py-3 rounded-xl hover:opacity-90 transition-opacity shadow-md"
+            >
+              Explorar Mapa
+            </a>
+            <button
+              id="profile-logout"
+              class="flex-1 bg-maya-rojo/10 text-maya-rojo font-bold py-3 rounded-xl hover:bg-maya-rojo hover:text-white transition-colors shadow-md"
+            >
+              Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  async function loadProfile() {
+    const loadingEl = document.getElementById("profile-loading")!;
+    const contentEl = document.getElementById("profile-content")!;
+    const errorEl = document.getElementById("profile-error")!;
+
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
+    try {
+      const { getMe } = await import("../services/auth");
+      const result = await getMe();
+
+      if (!result.success || !result.user) {
+        loadingEl.classList.add("hidden");
+        errorEl.textContent = result.error || "No se pudo cargar el perfil.";
+        errorEl.classList.remove("hidden");
+        return;
+      }
+
+      const user = result.user;
+
+      document.getElementById("profile-avatar")!.textContent = user.nombre.charAt(0).toUpperCase() + user.apellido.charAt(0).toUpperCase();
+      document.getElementById("profile-name")!.textContent = `${user.nombre} ${user.apellido}`;
+      document.getElementById("profile-email")!.textContent = user.correo;
+
+      document.getElementById("info-nombre")!.textContent = user.nombre;
+      document.getElementById("info-apellido")!.textContent = user.apellido;
+      document.getElementById("info-correo")!.textContent = user.correo;
+      document.getElementById("info-telefono")!.textContent = user.telefono || "No registrado";
+      document.getElementById("info-lat")!.textContent = user.lat || "No registrada";
+      document.getElementById("info-long")!.textContent = user.long || "No registrada";
+
+      loadingEl.classList.add("hidden");
+      contentEl.classList.remove("hidden");
+    } catch (err) {
+      loadingEl.classList.add("hidden");
+      errorEl.textContent = "Error de conexión al cargar el perfil.";
+      errorEl.classList.remove("hidden");
+    }
+  }
+
+  document.getElementById("profile-logout")!.addEventListener("click", () => {
+    localStorage.removeItem("auth_token");
+    window.location.href = "/";
+  });
+
+  loadProfile();
+</script>

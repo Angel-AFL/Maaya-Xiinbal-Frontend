@@ -23,9 +23,17 @@ export default function MaayaChat() {
     setIsTyping(true);
 
     try {
-      const res = await fetch("http://localhost:3000/api/chat", {
+      const token = localStorage.getItem("auth_token");
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch(`${import.meta.env.PUBLIC_API_URL}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({
           message: userText,
           history: geminiHistory,

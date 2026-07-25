@@ -12,7 +12,17 @@ export default function InteractiveMap() {
   useEffect(() => {
     const fetchAttractions = async () => {
       try {
-        const response = await fetch(import.meta.env.PUBLIC_API_URL);
+        const token = localStorage.getItem("auth_token");
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+        };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/atractivos`, {
+          headers,
+        });
 
         if (!response.ok) {
           throw new Error(`Error del servidor: ${response.status}`);
