@@ -13,6 +13,8 @@
 | Styling        | TailwindCSS             | ^4.3.0          |
 | Language       | TypeScript              | strict          |
 | Maps           | Leaflet + React-Leaflet | ^1.9.4 / ^5.0.0 |
+| Maps (cluster) | react-leaflet-cluster   | —               |
+| Adapter        | @astrojs/node           | ^10             |
 | Runtime        | Node.js                 | >= 22.12.0      |
 
 ## Commands
@@ -32,6 +34,7 @@ src/
 ├── components/
 │   ├── *.astro              # Astro components (SSR/static)
 │   └── map/                 # React components (client:only)
+│       ├── AttractionDetail.tsx
 │       ├── InteractiveMap.tsx
 │       ├── MaayaChat.tsx
 │       ├── MapCanvas.tsx
@@ -43,7 +46,9 @@ src/
 │   ├── map.astro            # Interactive map "/map"
 │   ├── login.astro          # Login form "/login"
 │   ├── register.astro       # Registration form "/register"
-│   └── profile.astro        # User profile "/profile"
+│   ├── profile.astro        # User profile "/profile"
+│   └── atractivo/
+│       └── [id].astro       # Attraction detail "/atractivo/:id" (SSR)
 ├── services/
 │   ├── api.ts               # HTTP client (auto-attaches JWT Bearer token)
 │   └── auth.ts              # Auth functions: login, register, logout, getMe
@@ -56,10 +61,11 @@ src/
 ## Architecture
 
 - **Astro** renders static/SSR content: landing page, layout, cards, forms
-- **React** handles client-side interactive components: map, chatbot
-- React components use `client:only="react"` directive on the map page
+- **React** handles client-side interactive components: map, chatbot, attraction detail
+- React components use `client:only="react"` directive on map and detail pages
 - `.astro` files use frontmatter (`---`) for imports and logic; template below for HTML output
-- `Layout.astro` wraps all pages with Header + Footer
+- `Layout.astro` wraps all pages with Header + Footer; contains Google Translate SDK scripts
+- `astro.config.mjs` uses `output: "static"` + `@astrojs/node` adapter; SSR pages opt-in via `export const prerender = false`
 - Global styles are imported once in `Layout.astro`
 
 ## Maya Theme Colors (Tailwind v4 @theme)
@@ -82,12 +88,13 @@ src/
 - **Imports in `.tsx` files**: Use relative paths (`../../utils/mapHelpers`)
 - **CSS classes**: Use Tailwind utility classes with `maya-*` theme tokens (e.g., `bg-maya-verde`, `text-maya-blanco`)
 - **Client-side scripts**: Written inline in `.astro` `<script>` tags (not external modules)
-- **Language**: UI text is in Spanish; bilingual toggle (ES / Yucatec Maya) via Google Translate cookies
+- **Language**: UI text is in Spanish; bilingual toggle (ES / Yucatec Maya) via Google Translate cookies; SDK loaded in `Layout.astro` for persistence across all pages
 - **API**: `PUBLIC_API_URL` env var points to backend base URL (e.g., `http://localhost:3000/api`); accessed via `import.meta.env.PUBLIC_API_URL`
 - **API response shapes**:
   - Attractions: `{ success: boolean, cantidad: number, data: Attraction[] }`
+  - Single Attraction: `{ success: boolean, data: Attraction }`
   - Auth: `{ success: boolean, token: string, user: User }`
-- **Attraction interface**: Defined in `src/utils/mapHelpers.ts` with fields: `id`, `nombre`, `descripcion`, `categoria`, `municipio`, `estado`, `lat`, `long`
+- **Attraction interface**: Defined in `src/utils/mapHelpers.ts` with fields: `id`, `nombre`, `descripcion`, `categoria`, `municipio`, `estado`, `lat`, `long`, `imagenes?`, `direccion?`, `precio?`, `hora_apertura?`, `hora_cierre?`
 
 ## Authentication
 
@@ -97,7 +104,7 @@ src/
 - `src/services/auth.ts` provides `login()`, `register()`, `getMe()`, `logout()`, `isAuthenticated()`
 - `Header.astro` detects token in `localStorage` and shows "Mi Perfil" + "Cerrar sesión" when authenticated
 - Protected endpoints (`/api/atractivos`, `/api/chat`) require the Bearer token
-- React components (`InteractiveMap.tsx`, `MaayaChat.tsx`) read token from `localStorage` for their fetch calls
+- `AttractionDetail.tsx` reads token from `localStorage` on mount for its fetch call
 - Registration form sends `{ nombre, apellido, correo, contrasena }` (backend field names)
 - Login form sends `{ correo, contrasena }`
 - On successful auth, user is redirected to `/map`
@@ -132,8 +139,10 @@ export default function MyComponent() {
 
 ## External Dependencies
 
-- **Google Translate API**: Loaded via script in Header for ES/MAY toggle; custom CSS hides Google's default banners/popups
+- **Google Translate API**: Loaded via script in `Layout.astro` for ES/MAY toggle across all pages; custom CSS hides Google's default banners/popups
 - **Leaflet CSS**: Must be imported in map-related pages for marker rendering
+- **react-leaflet-cluster**: Marker clustering on the interactive map; cluster icons themed with `maya-azul`
+- **@astrojs/node**: Server adapter for SSR pages (e.g., attraction detail `/atractivo/[id]`)
 
 ## Environment Variables
 
