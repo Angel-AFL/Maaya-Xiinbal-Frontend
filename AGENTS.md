@@ -6,21 +6,21 @@
 
 ## Tech Stack
 
-| Category | Technology | Version |
-|---|---|---|
-| Meta-Framework | Astro | ^6.4.2 |
-| UI Library | React | ^19.2.6 |
-| Styling | TailwindCSS | ^4.3.0 |
-| Language | TypeScript | strict |
-| Maps | Leaflet + React-Leaflet | ^1.9.4 / ^5.0.0 |
-| Runtime | Node.js | >= 22.12.0 |
+| Category       | Technology              | Version         |
+| -------------- | ----------------------- | --------------- |
+| Meta-Framework | Astro                   | ^6.4.2          |
+| UI Library     | React                   | ^19.2.6         |
+| Styling        | TailwindCSS             | ^4.3.0          |
+| Language       | TypeScript              | strict          |
+| Maps           | Leaflet + React-Leaflet | ^1.9.4 / ^5.0.0 |
+| Runtime        | Node.js                 | >= 22.12.0      |
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start dev server |
-| `npm run build` | Build for production |
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start dev server         |
+| `npm run build`   | Build for production     |
 | `npm run preview` | Preview production build |
 
 **Note:** There is no lint or typecheck script configured. To typecheck, run `npx astro check`.
@@ -42,7 +42,11 @@ src/
 │   ├── index.astro          # Homepage "/"
 │   ├── map.astro            # Interactive map "/map"
 │   ├── login.astro          # Login form "/login"
-│   └── register.astro       # Registration form "/register"
+│   ├── register.astro       # Registration form "/register"
+│   └── profile.astro        # User profile "/profile"
+├── services/
+│   ├── api.ts               # HTTP client (auto-attaches JWT Bearer token)
+│   └── auth.ts              # Auth functions: login, register, logout, getMe
 ├── styles/
 │   └── global.css           # Tailwind imports + Maya theme colors
 └── utils/
@@ -60,17 +64,17 @@ src/
 
 ## Maya Theme Colors (Tailwind v4 @theme)
 
-| Token | Hex |
-|---|---|
-| `maya-azul` | `#395c6b` |
-| `maya-verde` | `#517a5e` |
-| `maya-rojo` | `#9a382d` |
+| Token           | Hex       |
+| --------------- | --------- |
+| `maya-azul`     | `#395c6b` |
+| `maya-verde`    | `#517a5e` |
+| `maya-rojo`     | `#9a382d` |
 | `maya-amarillo` | `#cca044` |
-| `maya-blanco` | `#eaddc9` |
-| `maya-negro` | `#2c2e2f` |
-| `maya-morado` | `#654b6b` |
-| `maya-rosa` | `#b55375` |
-| `maya-naranja` | `#b86a3d` |
+| `maya-blanco`   | `#eaddc9` |
+| `maya-negro`    | `#2c2e2f` |
+| `maya-morado`   | `#654b6b` |
+| `maya-rosa`     | `#b55375` |
+| `maya-naranja`  | `#b86a3d` |
 
 ## Key Conventions
 
@@ -79,13 +83,29 @@ src/
 - **CSS classes**: Use Tailwind utility classes with `maya-*` theme tokens (e.g., `bg-maya-verde`, `text-maya-blanco`)
 - **Client-side scripts**: Written inline in `.astro` `<script>` tags (not external modules)
 - **Language**: UI text is in Spanish; bilingual toggle (ES / Yucatec Maya) via Google Translate cookies
-- **API**: `PUBLIC_API_URL` env var points to backend; accessed via `import.meta.env.PUBLIC_API_URL`
-- **API response shape**: `{ success: boolean, data: Attraction[] }`
+- **API**: `PUBLIC_API_URL` env var points to backend base URL (e.g., `http://localhost:3000/api`); accessed via `import.meta.env.PUBLIC_API_URL`
+- **API response shapes**:
+  - Attractions: `{ success: boolean, cantidad: number, data: Attraction[] }`
+  - Auth: `{ success: boolean, token: string, user: User }`
 - **Attraction interface**: Defined in `src/utils/mapHelpers.ts` with fields: `id`, `nombre`, `descripcion`, `categoria`, `municipio`, `estado`, `lat`, `long`
+
+## Authentication
+
+- JWT token is stored in `localStorage` under key `auth_token`
+- Token is auto-attached to API requests via `Authorization: Bearer <token>` header
+- `src/services/api.ts` provides `apiClient()`, `setToken()`, `removeToken()`, `hasToken()`
+- `src/services/auth.ts` provides `login()`, `register()`, `getMe()`, `logout()`, `isAuthenticated()`
+- `Header.astro` detects token in `localStorage` and shows "Mi Perfil" + "Cerrar sesión" when authenticated
+- Protected endpoints (`/api/atractivos`, `/api/chat`) require the Bearer token
+- React components (`InteractiveMap.tsx`, `MaayaChat.tsx`) read token from `localStorage` for their fetch calls
+- Registration form sends `{ nombre, apellido, correo, contrasena }` (backend field names)
+- Login form sends `{ correo, contrasena }`
+- On successful auth, user is redirected to `/map`
 
 ## File Patterns
 
 ### `.astro` component
+
 ```astro
 ---
 import Component from "../path/Component.astro";
@@ -101,6 +121,7 @@ import Component from "../path/Component.astro";
 ```
 
 ### `.tsx` React component
+
 ```tsx
 import { useState } from "react";
 
@@ -116,6 +137,6 @@ export default function MyComponent() {
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|---|---|---|
-| `PUBLIC_API_URL` | Yes | Backend API endpoint for attractions data |
+| Variable         | Required | Description                                              |
+| ---------------- | -------- | -------------------------------------------------------- |
+| `PUBLIC_API_URL` | Yes      | Backend API base URL (e.g., `http://localhost:3000/api`) |
