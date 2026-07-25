@@ -58,6 +58,7 @@ export default function InteractiveMap() {
         setActiveFilter={setActiveFilter}
         isLoading={isLoading}
         error={error}
+        locations={locations}
       />
 
       {/* Módulo del Mapa */}

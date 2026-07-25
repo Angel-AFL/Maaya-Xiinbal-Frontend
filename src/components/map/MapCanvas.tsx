@@ -43,6 +43,13 @@ export default function MapCanvas({
               >
                 <Popup className="rounded-xl overflow-hidden">
                   <div className="p-1 min-w-50">
+                    {location.imagenes && location.imagenes.length > 0 && (
+                      <img
+                        src={location.imagenes[0]}
+                        alt={location.nombre}
+                        className="w-full h-32 object-cover rounded-lg mb-3"
+                      />
+                    )}
                     <span className="text-xs font-bold text-maya-azul uppercase tracking-wider">
                       {location.categoria}
                     </span>
@@ -55,7 +62,12 @@ export default function MapCanvas({
                     <p className="text-sm text-maya-negro/80 mb-3 line-clamp-3">
                       {location.descripcion}
                     </p>
-                    <button className="w-full bg-maya-verde text-white text-xs font-bold py-2 rounded-lg hover:bg-maya-negro transition-colors">
+                    <button
+                      onClick={() => {
+                        window.location.href = `/atractivo/${location.id}`;
+                      }}
+                      className="block w-full text-center bg-white text-maya-verde border border-maya-verde text-xs font-bold py-2 rounded-lg hover:bg-maya-verde hover:text-white transition-colors"
+                    >
                       Ver detalles
                     </button>
                   </div>
