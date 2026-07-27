@@ -19,6 +19,7 @@
     "@types/react-dom": "^19.2.3",
     "astro": "^6.4.2",
     "leaflet": "^1.9.4",
+    "marked": "^18.0.7",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-leaflet": "^5.0.0",
