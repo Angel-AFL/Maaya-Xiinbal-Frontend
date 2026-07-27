@@ -1,6 +1,6 @@
 import { useMemo, memo } from "react";
 import type { Attraction } from "../../utils/mapHelpers";
-import MaayaChat from "../map/MaayaChat";
+import MayitaChat from "./MayitaChat";
 
 interface MapSidebarProps {
   activeFilter: string;
@@ -35,7 +35,10 @@ function MapSidebar({
   }, [locations, activeFilter]);
 
   return (
-    <div className="absolute top-6 left-6 z-1000 w-80 bg-white/95 backdrop-blur-md border border-maya-negro/10 rounded-2xl shadow-xl p-5 hidden md:flex flex-col" style={{ maxHeight: "calc(100vh - 3rem)" }}>
+    <div
+      className="absolute top-6 left-6 z-1000 w-80 bg-white/95 backdrop-blur-md border border-maya-negro/10 rounded-2xl shadow-xl p-5 hidden md:flex flex-col"
+      style={{ maxHeight: "calc(100vh - 3rem)" }}
+    >
       <h2 className="text-xl font-bold text-maya-negro mb-1">
         Explora la Península
       </h2>
@@ -74,7 +77,8 @@ function MapSidebar({
       {!isLoading && !error && (
         <div className="flex-1 overflow-y-auto min-h-0 mb-4">
           <h3 className="text-xs font-semibold text-maya-negro/50 uppercase tracking-wider mb-2">
-            {activeFilter === "Todos" ? "Todos los atractivos" : activeFilter} ({filteredLocations.length})
+            {activeFilter === "Todos" ? "Todos los atractivos" : activeFilter} (
+            {filteredLocations.length})
           </h3>
           <div className="space-y-1.5 pr-1">
             {filteredLocations.map((loc) => (
@@ -83,7 +87,7 @@ function MapSidebar({
                 href={`/atractivo/${loc.id}`}
                 className="flex gap-3 p-2 rounded-xl hover:bg-maya-verde/10 transition-colors group"
               >
-                <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-maya-negro/10">
+                <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-maya-negro/10">
                   {loc.imagenes && loc.imagenes.length > 0 ? (
                     <img
                       src={loc.imagenes[0]}
@@ -93,8 +97,19 @@ function MapSidebar({
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-maya-negro/25" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6 text-maya-negro/25"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
                       </svg>
                     </div>
                   )}
@@ -103,7 +118,9 @@ function MapSidebar({
                   <h4 className="text-sm font-bold text-maya-negro group-hover:text-maya-azul transition-colors truncate">
                     {loc.nombre}
                   </h4>
-                  <span className="text-xs text-maya-negro/50">{loc.categoria}</span>
+                  <span className="text-xs text-maya-negro/50">
+                    {loc.categoria}
+                  </span>
                 </div>
               </a>
             ))}
@@ -111,15 +128,17 @@ function MapSidebar({
         </div>
       )}
 
-      <MaayaChat />
+      <MayitaChat />
     </div>
   );
 }
 
-export default memo(MapSidebar, (prev, next) =>
-  prev.activeFilter === next.activeFilter &&
-  prev.isLoading === next.isLoading &&
-  prev.error === next.error &&
-  prev.locations === next.locations &&
-  prev.setActiveFilter === next.setActiveFilter
+export default memo(
+  MapSidebar,
+  (prev, next) =>
+    prev.activeFilter === next.activeFilter &&
+    prev.isLoading === next.isLoading &&
+    prev.error === next.error &&
+    prev.locations === next.locations &&
+    prev.setActiveFilter === next.setActiveFilter,
 );

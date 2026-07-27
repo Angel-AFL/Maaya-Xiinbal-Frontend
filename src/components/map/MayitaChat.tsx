@@ -113,7 +113,9 @@ export default function MaayaChat() {
                 {msg.sender === "ia" ? (
                   <div
                     className="maaya-markdown"
-                    dangerouslySetInnerHTML={{ __html: marked.parse(msg.text) as string }}
+                    dangerouslySetInnerHTML={{
+                      __html: marked.parse(msg.text) as string,
+                    }}
                   />
                 ) : (
                   msg.text

@@ -9,7 +9,9 @@ export default function InteractiveMap() {
   const [locations, setLocations] = useState<Attraction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   const handleFilterChange = useCallback((filter: string) => {
     setActiveFilter(filter);
@@ -20,7 +22,9 @@ export default function InteractiveMap() {
   }, []);
 
   useEffect(() => {
-    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -34,9 +38,12 @@ export default function InteractiveMap() {
           headers["Authorization"] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/atractivos`, {
-          headers,
-        });
+        const response = await fetch(
+          `${import.meta.env.PUBLIC_API_URL}/atractivos`,
+          {
+            headers,
+          },
+        );
 
         if (!response.ok) {
           throw new Error(`Error del servidor: ${response.status}`);
@@ -62,9 +69,7 @@ export default function InteractiveMap() {
   }, []);
 
   return (
-    <div
-      className="relative w-full flex-1 bg-maya-blanco/20"
-    >
+    <div className="relative w-full flex-1 bg-maya-blanco/20">
       <MapSidebar
         activeFilter={activeFilter}
         setActiveFilter={handleFilterChange}
