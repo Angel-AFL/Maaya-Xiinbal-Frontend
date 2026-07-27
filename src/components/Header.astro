@@ -48,7 +48,7 @@
           <line x1="2" y1="12" x2="22" y2="12"></line>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
-        <span id="texto-idioma">ES / MAY</span>
+        <span id="texto-idioma">ES / MAY / EN</span>
       </button>
 
       <!-- Div oculto obligatorio para que cargue la API de Google -->
@@ -146,10 +146,12 @@
       return null;
     };
 
-    // Al cargar la página, revisamos la cookie para ajustar el texto del botón (ES / MAY)
+    // Al cargar la página, revisamos la cookie para ajustar el texto del botón
     const currentTrans = getCookie('googtrans');
     if (currentTrans && currentTrans.includes('yua')) {
-      if (textoBoton) textoBoton.innerText = "MAYA / ESP";
+      if (textoBoton) textoBoton.innerText = "MAY / EN / ES";
+    } else if (currentTrans && currentTrans.includes('en')) {
+      if (textoBoton) textoBoton.innerText = "EN / ES / MAY";
     }
 
     if (botonIdioma) {
@@ -160,17 +162,20 @@
         const currentCookie = getCookie('googtrans');
 
         if (currentCookie && currentCookie.includes('yua')) {
-          // Si ya está en maya, borramos las cookies de Google para volver a Español
+          // Maya → Inglés
+          document.cookie = "googtrans=/es/en; path=/;";
+          document.cookie = "googtrans=/es/en; path=/; domain=" + window.location.hostname;
+        } else if (currentCookie && currentCookie.includes('en')) {
+          // Inglés → Español: borrar cookies y forzar español
           document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
           document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
-          document.cookie = "googtrans=/es/es; path=/;"; // Forzar español
+          document.cookie = "googtrans=/es/es; path=/;";
         } else {
-          // Si está en español, escribimos la cookie oficial para traducir a Maya (/es/yua)
+          // Español → Maya
           document.cookie = "googtrans=/es/yua; path=/;";
           document.cookie = "googtrans=/es/yua; path=/; domain=" + window.location.hostname;
         }
 
-        // Recargamos la página al instante para que Google aplique el idioma de la cookie de golpe
         window.location.reload();
       });
     }
