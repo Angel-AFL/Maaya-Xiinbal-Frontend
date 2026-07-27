@@ -1,74 +1,76 @@
 # AGENTS.md
 
-## Project Overview
+## Descripción del Proyecto
 
-**Maaya Xíinbal** is a tourism and cultural exploration platform for the Yucatán Peninsula (Maxcanú region). It serves as an interactive guide featuring an AI chatbot, interactive map, and curated attraction categories.
+**Maaya Xíinbal** es una plataforma de turismo y exploración cultural para la Península de Yucatán (región de Maxcanú). Funciona como una guía interactiva con un chatbot de IA, mapa interactivo y categorías curadas de atractivos.
 
-## Tech Stack
+## Stack Tecnológico
 
-| Category       | Technology              | Version         |
-| -------------- | ----------------------- | --------------- |
-| Meta-Framework | Astro                   | ^6.4.2          |
-| UI Library     | React                   | ^19.2.6         |
-| Styling        | TailwindCSS             | ^4.3.0          |
-| Language       | TypeScript              | strict          |
-| Maps           | Leaflet + React-Leaflet | ^1.9.4 / ^5.0.0 |
-| Maps (cluster) | react-leaflet-cluster   | —               |
-| Adapter        | @astrojs/node           | ^10             |
-| Runtime        | Node.js                 | >= 22.12.0      |
+| Categoría        | Tecnología              | Versión         |
+| ---------------- | ----------------------- | --------------- |
+| Meta-Framework   | Astro                   | ^6.4.2          |
+| UI               | React                   | ^19.2.6         |
+| Estilos          | TailwindCSS             | ^4.3.0          |
+| Lenguaje         | TypeScript              | strict          |
+| Mapas            | Leaflet + React-Leaflet | ^1.9.4 / ^5.0.0 |
+| Mapas (cluster)  | react-leaflet-cluster   | ^4.1.3          |
+| Markdown         | marked                  | ^18.0.7         |
+| Adaptador        | @astrojs/node           | ^10             |
+| Runtime          | Node.js                 | >= 22.12.0      |
 
-## Commands
+## Comandos
 
-| Command           | Description              |
+| Comando           | Descripción              |
 | ----------------- | ------------------------ |
-| `npm run dev`     | Start dev server         |
-| `npm run build`   | Build for production     |
-| `npm run preview` | Preview production build |
+| `npm run dev`     | Iniciar servidor de dev  |
+| `npm run build`   | Build de producción      |
+| `npm run preview` | Previsualizar build      |
 
-**Note:** There is no lint or typecheck script configured. To typecheck, run `npx astro check`.
+**Nota:** No hay scripts de lint o typecheck configurados. Para typecheck ejecutar `npx astro check`.
 
-## Project Structure
+## Estructura del Proyecto
 
 ```
 src/
 ├── components/
-│   ├── *.astro              # Astro components (SSR/static)
-│   └── map/                 # React components (client:only)
+│   ├── *.astro              # Componentes Astro (SSR/estático)
+│   └── map/                 # Componentes React (client:only)
 │       ├── AttractionDetail.tsx
 │       ├── InteractiveMap.tsx
 │       ├── MaayaChat.tsx
 │       ├── MapCanvas.tsx
 │       └── MapSidebar.tsx
 ├── layouts/
-│   └── Layout.astro         # Base HTML shell (Header + slot + Footer)
+│   └── Layout.astro         # Shell HTML base (Header + slot + Footer)
 ├── pages/
-│   ├── index.astro          # Homepage "/"
-│   ├── map.astro            # Interactive map "/map"
-│   ├── login.astro          # Login form "/login"
-│   ├── register.astro       # Registration form "/register"
-│   ├── profile.astro        # User profile "/profile"
+│   ├── index.astro          # Página principal "/"
+│   ├── map.astro            # Mapa interactivo "/map"
+│   ├── login.astro          # Inicio de sesión "/login"
+│   ├── register.astro       # Registro "/register"
+│   ├── profile.astro        # Perfil de usuario "/profile"
 │   └── atractivo/
-│       └── [id].astro       # Attraction detail "/atractivo/:id" (SSR)
+│       └── [id].astro       # Detalle de atractivo "/atractivo/:id" (SSR)
 ├── services/
-│   ├── api.ts               # HTTP client (auto-attaches JWT Bearer token)
-│   └── auth.ts              # Auth functions: login, register, logout, getMe
+│   ├── api.ts               # Cliente HTTP (adjunta token JWT Bearer)
+│   └── auth.ts              # Funciones auth: login, register, logout, getMe
 ├── styles/
-│   └── global.css           # Tailwind imports + Maya theme colors
+│   └── global.css           # Import de Tailwind + colores tema Maya + estilos markdown
 └── utils/
-    └── mapHelpers.ts        # Attraction types, marker colors, Leaflet icons
+    └── mapHelpers.ts        # Tipos de atractivos, colores de marcadores, iconos Leaflet
 ```
 
-## Architecture
+## Arquitectura
 
-- **Astro** renders static/SSR content: landing page, layout, cards, forms
-- **React** handles client-side interactive components: map, chatbot, attraction detail
-- React components use `client:only="react"` directive on map and detail pages
-- `.astro` files use frontmatter (`---`) for imports and logic; template below for HTML output
-- `Layout.astro` wraps all pages with Header + Footer; contains Google Translate SDK scripts
-- `astro.config.mjs` uses `output: "static"` + `@astrojs/node` adapter; SSR pages opt-in via `export const prerender = false`
-- Global styles are imported once in `Layout.astro`
+- **Astro** renderiza contenido estático/SSR: landing page, layout, tarjetas, formularios
+- **React** maneja componentes interactivos del cliente: mapa, chatbot, detalle de atractivo
+- Los componentes React usan la directiva `client:only="react"` en las páginas de mapa y detalle
+- Los archivos `.astro` usan frontmatter (`---`) para imports y lógica; template abajo para el HTML
+- `Layout.astro` envuelve todas las páginas con Header + Footer; contiene los scripts del SDK de Google Translate + atributo `lang` dinámico
+- `astro.config.mjs` usa `output: "static"` + adaptador `@astrojs/node` en modo `standalone`; las páginas SSR optan por inclusión con `export const prerender = false`
+- TailwindCSS v4 mediante el plugin `@tailwindcss/vite`; los gradientes usan sintaxis `bg-linear-to-br`
+- Los estilos globales se importan una vez en `Layout.astro`
 
-## Maya Theme Colors (Tailwind v4 @theme)
+## Colores del Tema Maya (Tailwind v4 @theme)
 
 | Token           | Hex       |
 | --------------- | --------- |
@@ -82,70 +84,103 @@ src/
 | `maya-rosa`     | `#b55375` |
 | `maya-naranja`  | `#b86a3d` |
 
-## Key Conventions
+## Soporte Multilingüe — 9 Idiomas
 
-- **Imports in `.astro` files**: Use relative paths (`../components/Header.astro`)
-- **Imports in `.tsx` files**: Use relative paths (`../../utils/mapHelpers`)
-- **CSS classes**: Use Tailwind utility classes with `maya-*` theme tokens (e.g., `bg-maya-verde`, `text-maya-blanco`)
-- **Client-side scripts**: Written inline in `.astro` `<script>` tags (not external modules)
-- **Language**: UI text is in Spanish; bilingual toggle (ES / Yucatec Maya) via Google Translate cookies; SDK loaded in `Layout.astro` for persistence across all pages
-- **API**: `PUBLIC_API_URL` env var points to backend base URL (e.g., `http://localhost:3000/api`); accessed via `import.meta.env.PUBLIC_API_URL`
-- **API response shapes**:
-  - Attractions: `{ success: boolean, cantidad: number, data: Attraction[] }`
-  - Single Attraction: `{ success: boolean, data: Attraction }`
-  - Auth: `{ success: boolean, token: string, user: User }`
-- **Attraction interface**: Defined in `src/utils/mapHelpers.ts` with fields: `id`, `nombre`, `descripcion`, `categoria`, `municipio`, `estado`, `lat`, `long`, `imagenes?`, `direccion?`, `precio?`, `hora_apertura?`, `hora_cierre?`
+- **Google Translate SDK:** Cargado mediante script en `Layout.astro`; idioma base es español (`es`)
+- **`includedLanguages`:** `es,yua,en,fr,de,pt,it,zh-CN,ja`
+- **UI:** Dropdown personalizado en `Header.astro` (no el widget por defecto de Google — oculto con `class="hidden"` y CSS global)
+- **Mecanismo:** El cambio de idioma setea la cookie `googtrans` y recarga la página; volver a español limpia la cookie
+- **Lang del navegador:** `Layout.astro` tiene un script inline que lee la cookie `googtrans` y actualiza `document.documentElement.lang` para SEO
+- **Lista de idiomas (definida en el script de Header.astro):**
 
-## Authentication
+| Código | Nombre     | Valor de cookie |
+|--------|-----------|-----------------|
+| es     | Español   | (por defecto — limpia la cookie) |
+| yua    | Maya      | `/es/yua` |
+| en     | English   | `/es/en` |
+| fr     | Français  | `/es/fr` |
+| de     | Deutsch   | `/es/de` |
+| pt     | Português | `/es/pt` |
+| it     | Italiano  | `/es/it` |
+| zh-CN  | 中文        | `/es/zh-CN` |
+| ja     | 日本語       | `/es/ja` |
 
-- JWT token is stored in `localStorage` under key `auth_token`
-- Token is auto-attached to API requests via `Authorization: Bearer <token>` header
-- `src/services/api.ts` provides `apiClient()`, `setToken()`, `removeToken()`, `hasToken()`
-- `src/services/auth.ts` provides `login()`, `register()`, `getMe()`, `logout()`, `isAuthenticated()`
-- `Header.astro` detects token in `localStorage` and shows "Mi Perfil" + "Cerrar sesión" when authenticated
-- Protected endpoints (`/api/atractivos`, `/api/chat`) require the Bearer token
-- `AttractionDetail.tsx` reads token from `localStorage` on mount for its fetch call
-- Registration form sends `{ nombre, apellido, correo, contrasena }` (backend field names)
-- Login form sends `{ correo, contrasena }`
-- On successful auth, user is redirected to `/map`
+## Convenciones Clave
 
-## File Patterns
+- **Imports en `.astro`**: Usar rutas relativas (`../components/Header.astro`)
+- **Imports en `.tsx`**: Usar rutas relativas (`../../utils/mapHelpers`)
+- **Clases CSS**: Usar clases utilitarias de Tailwind con tokens `maya-*` (ej. `bg-maya-verde`, `text-maya-blanco`)
+- **Scripts del cliente**: Escritos inline en tags `<script>` de `.astro` (no módulos externos)
+- **Idioma**: El texto de la UI está en español; soporte multilingüe mediante dropdown de Google Translate (9 idiomas, basado en cookies)
+- **API**: La variable de entorno `PUBLIC_API_URL` apunta a la URL base del backend (ej. `http://localhost:3000/api`); se accede mediante `import.meta.env.PUBLIC_API_URL`
+- **Formas de respuesta de la API**:
+  - Lista de atractivos: `{ success: boolean, cantidad: number, data: Attraction[] }`
+  - Atractivo individual: `{ success: boolean, data: Attraction }`
+  - Chat: `{ success: boolean, response: string }`
+  - Auth: `{ success: boolean, token: string, user: User }` / `{ success: boolean, user: User }`
+- **Interfaz Attraction**: Definida en `src/utils/mapHelpers.ts` con campos: `id` (number), `nombre`, `descripcion`, `categoria`, `municipio`, `estado`, `lat`, `long`, `imagenes?`, `direccion?`, `precio?`, `hora_apertura?`, `hora_cierre?`
+- **Los componentes React usan `fetch` directamente** (no `apiClient`) — leen el token de `localStorage` y adjuntan el header `Authorization` manualmente
+- **Las páginas de auth usan imports dinámicos**: `const { login } = await import("../services/auth")` en `login.astro`, `register.astro`, `profile.astro`
 
-### `.astro` component
+## Autenticación
+
+- El token JWT se almacena en `localStorage` bajo la clave `auth_token`
+- El token se adjunta automáticamente a las peticiones API mediante el header `Authorization: Bearer <token>`
+- `src/services/api.ts` provee `apiClient()`, `setToken()`, `removeToken()`, `hasToken()`
+- `src/services/auth.ts` provee `login()`, `register()`, `getMe()`, `logout()`, `isAuthenticated()`
+- `Header.astro` detecta el token en `localStorage` y muestra "Mi Perfil" + "Cerrar sesión" cuando está autenticado
+- Los endpoints protegidos (`/api/atractivos`, `/api/chat`) requieren el token Bearer
+- El formulario de registro envía `{ nombre, apellido, correo, contrasena }` (nombres de campos del backend)
+- El formulario de login envía `{ correo, contrasena }`
+- Al autenticarse exitosamente, el usuario es redirigido a `/map`
+
+## MaayaChat — Componente del Chatbot IA
+
+- Archivo: `src/components/map/MaayaChat.tsx`
+- Se renderiza dentro de `MapSidebar.tsx` como un panel colapsable en la parte inferior
+- Llama a `POST /api/chat` con body `{ message, history }` donde `history` es `ChatMessage[]` compatible con Gemini
+- **Renderizado de markdown:** Las respuestas de Mayita se parsean con `marked` y se inyectan mediante `dangerouslySetInnerHTML` con clase `maaya-markdown`
+- Los estilos de markdown están definidos en `global.css` (listas, negritas, itálicas, encabezados, párrafos)
+- Los mensajes del usuario son texto plano; solo los mensajes de la IA usan renderizado markdown
+
+## Patrones de Archivos
+
+### Componente `.astro`
 
 ```astro
 ---
-import Component from "../path/Component.astro";
+import Componente from "../ruta/Componente.astro";
 ---
 
-<div class="tailwind-classes">
-  <Component />
+<div class="clases-tailwind">
+  <Componente />
 </div>
 
 <script>
-  // Client-side JS (vanilla, no framework)
+  // JS del cliente (vanilla, sin framework)
 </script>
 ```
 
-### `.tsx` React component
+### Componente React `.tsx`
 
 ```tsx
 import { useState } from "react";
 
-export default function MyComponent() {
-  return <div className="tailwind-classes">...</div>;
+export default function MiComponente() {
+  return <div className="clases-tailwind">...</div>;
 }
 ```
 
-## External Dependencies
+## Dependencias Externas
 
-- **Google Translate API**: Loaded via script in `Layout.astro` for ES/MAY toggle across all pages; custom CSS hides Google's default banners/popups
-- **Leaflet CSS**: Must be imported in map-related pages for marker rendering
-- **react-leaflet-cluster**: Marker clustering on the interactive map; cluster icons themed with `maya-azul`
-- **@astrojs/node**: Server adapter for SSR pages (e.g., attraction detail `/atractivo/[id]`)
+- **Google Translate API**: Cargado mediante script en `Layout.astro` para el dropdown de 9 idiomas en todas las páginas; CSS personalizado oculta los banners/popups/burbujas por defecto de Google
+- **Leaflet CSS**: Debe importarse en las páginas del mapa para el renderizado de marcadores
+- **react-leaflet-cluster**: Agrupación de marcadores en el mapa interactivo; iconos de cluster con tema `maya-azul`
+- **marked**: Parser de markdown para las respuestas de MaayaChat; permite negritas, itálicas, listas y encabezados en los globos del chat
+- **@astrojs/node**: Adaptador de servidor para páginas SSR (ej. detalle de atractivo `/atractivo/[id]`); ejecuta en modo `standalone`
 
-## Environment Variables
+## Variables de Entorno
 
-| Variable         | Required | Description                                              |
-| ---------------- | -------- | -------------------------------------------------------- |
-| `PUBLIC_API_URL` | Yes      | Backend API base URL (e.g., `http://localhost:3000/api`) |
+| Variable         | Requerida | Descripción                                                  |
+| ---------------- | --------- | ------------------------------------------------------------ |
+| `PUBLIC_API_URL` | Sí        | URL base de la API del backend (ej. `http://localhost:3000/api`) |
