@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { marked } from "marked";
 
 interface ChatMessage {
   role: "user" | "model";
@@ -23,9 +24,17 @@ export default function MaayaChat() {
     setIsTyping(true);
 
     try {
-      const res = await fetch("http://localhost:3000/api/chat", {
+      const token = localStorage.getItem("auth_token");
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch(`${import.meta.env.PUBLIC_API_URL}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({
           message: userText,
           history: geminiHistory,
@@ -101,7 +110,16 @@ export default function MaayaChat() {
                 key={i}
                 className={`max-w-[85%] p-2 rounded-lg text-xs ${msg.sender === "user" ? "bg-maya-azul text-white self-end rounded-tr-none" : "bg-maya-negro/5 text-maya-negro self-start rounded-tl-none"}`}
               >
-                {msg.text}
+                {msg.sender === "ia" ? (
+                  <div
+                    className="maaya-markdown"
+                    dangerouslySetInnerHTML={{
+                      __html: marked.parse(msg.text) as string,
+                    }}
+                  />
+                ) : (
+                  msg.text
+                )}
               </div>
             ))}
             {isTyping && (

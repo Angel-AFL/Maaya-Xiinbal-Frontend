@@ -9,6 +9,11 @@ export interface Attraction {
   estado: string;
   lat: string;
   long: string;
+  imagenes?: string[];
+  direccion?: string;
+  precio?: string;
+  hora_apertura?: string;
+  hora_cierre?: string;
 }
 
 const mayaAzul = "#395c6b";

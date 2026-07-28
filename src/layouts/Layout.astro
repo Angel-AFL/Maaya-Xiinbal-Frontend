@@ -11,12 +11,40 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="es" class="scroll-smooth" id="html-root">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/logo.png" type="image/png" />
     <title>{title}</title>
+    <script type="text/javascript" is:inline>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'es',
+          includedLanguages: 'es,yua,en,fr,de,pt,it,zh-CN,ja', 
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" is:inline></script>
+    <script is:inline>
+      (function() {
+        var getCookie = function(name) {
+          var value = '; ' + document.cookie;
+          var parts = value.split('; ' + name + '=');
+          if (parts.length === 2) return parts.pop().split(';').shift();
+          return null;
+        };
+        var langMap = { es: 'es', yua: 'es', en: 'en', fr: 'fr', de: 'de', pt: 'pt', it: 'it', 'zh-CN': 'zh', ja: 'ja' };
+        var trans = getCookie('googtrans');
+        var target = 'es';
+        if (trans) {
+          var match = trans.match(/\/es\/(\w+(?:-\w+)?)/);
+          if (match && langMap[match[1]]) target = langMap[match[1]];
+        }
+        document.documentElement.lang = target;
+      })();
+    </script>
   </head>
   <body class="flex flex-col">
     <Header />

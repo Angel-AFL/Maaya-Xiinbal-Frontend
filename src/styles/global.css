@@ -11,3 +11,44 @@
   --color-maya-rosa: #b55375;
   --color-maya-naranja: #b86a3d;
 }
+
+.maaya-markdown ul,
+.maaya-markdown ol {
+  list-style: disc;
+  padding-left: 1rem;
+  margin: 0.25rem 0;
+}
+.maaya-markdown li {
+  margin-bottom: 0.125rem;
+}
+.maaya-markdown strong {
+  font-weight: 700;
+}
+.maaya-markdown em {
+  font-style: italic;
+}
+.maaya-markdown h1,
+.maaya-markdown h2,
+.maaya-markdown h3 {
+  font-weight: 700;
+  margin: 0.25rem 0;
+}
+.maaya-markdown h1 { font-size: 1rem; }
+.maaya-markdown h2 { font-size: 0.925rem; }
+.maaya-markdown h3 { font-size: 0.85rem; }
+.maaya-markdown p {
+  margin: 0.25rem 0;
+}
+
+@keyframes lang-dropdown-in {
+  from { opacity: 0; transform: translateY(-0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#lang-dropdown:not(.hidden) {
+  animation: lang-dropdown-in 0.2s ease-out;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}

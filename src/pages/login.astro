@@ -4,21 +4,30 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Iniciar Sesión | Maaya Xíinbal">
   <main
-    class="min-h-screen bg-maya-negro/10 flex items-center justify-center p-4"
+    class="min-h-screen relative bg-linear-to-br from-maya-azul/15 via-maya-negro/10 to-maya-verde/15 flex items-center justify-center p-4"
   >
-    <!-- Tarjeta Principal -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-maya-amarillo/10 blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-maya-verde/10 blur-3xl"
+      >
+      </div>
+    </div>
+
     <div
-      class="bg-maya-blanco rounded-3xl shadow-2xl w-full max-w-4xl flex flex-col md:flex-row relative overflow-hidden"
+      class="relative bg-white rounded-3xl shadow-2xl shadow-maya-azul/15 w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border-2 border-maya-negro/10"
     >
-      <!-- Botón Cerrar (X) -->
       <a
         href="/"
-        class="absolute top-6 right-6 text-maya-azul hover:text-maya-rojo transition-colors z-10"
+        class="absolute top-6 right-6 hover:text-maya-rojo transition-colors z-10"
         aria-label="Cerrar"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-8 w-8"
+          class="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -31,82 +40,272 @@ import Layout from "../layouts/Layout.astro";
         </svg>
       </a>
 
-      <!-- Columna Izquierda: Imagen -->
-      <div class="md:w-1/2 p-6 md:p-8">
-        <div
-          class="w-full h-full border border-maya-negro/10 rounded-2xl overflow-hidden bg-maya-blanco aspect-square flex items-center justify-center p-2"
-        >
-          <!-- Reemplaza el src con la ruta de la imagen Yum Kaax que tienes -->
-          <img
-            src="https://cdn.pixabay.com/photo/2022/08/30/17/56/corn-god-7421631_640.png"
-            alt="Ilustración Yum Kaax"
-            class="w-full h-full object-contain rounded-xl"
-          />
+      <div
+        class="md:w-1/2 relative overflow-hidden bg-linear-to-br from-maya-verde to-maya-azul p-8 md:p-12 flex flex-col items-center justify-center text-white"
+      >
+        <div class="absolute inset-0 opacity-10">
+          <div
+            class="absolute top-10 left-10 w-40 h-40 rounded-full border-4 border-white/30"
+          >
+          </div>
+          <div
+            class="absolute bottom-10 right-10 w-32 h-32 rounded-full border-4 border-white/20"
+          >
+          </div>
+          <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-white/10"
+          >
+          </div>
+        </div>
+
+        <div class="relative z-10 text-center">
+          <div
+            class="w-32 h-32 mx-auto mb-8 rounded-2xl bg-white/10 backdrop-blur-sm p-4 border border-white/20"
+          >
+            <img
+              src="/logo.png"
+              alt="Maaya Xíinbal"
+              class="w-full h-full object-contain"
+            />
+          </div>
+          <h2 class="text-3xl font-extrabold mb-3 tracking-tight">
+            Maaya Xíinbal
+          </h2>
+          <p class="text-white/70 text-sm max-w-xs mx-auto leading-relaxed">
+            Descubre las maravillas ocultas de la Península de Yucatán.
+          </p>
+          <div class="mt-10 flex gap-3 justify-center">
+            <div class="w-2 h-2 rounded-full bg-maya-amarillo"></div>
+            <div class="w-2 h-2 rounded-full bg-maya-blanco/40"></div>
+            <div class="w-2 h-2 rounded-full bg-maya-blanco/40"></div>
+          </div>
         </div>
       </div>
 
-      <!-- Columna Derecha: Formulario -->
       <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-        <h1 class="text-4xl font-extrabold text-maya-azul mb-2">Login</h1>
-        <p class="text-maya-negro/70 mb-10 text-lg">
-          Inicie sesión para compartir sus experiencias.
-        </p>
+        <div class="mb-10">
+          <h1 class="text-3xl font-extrabold text-maya-negro mb-1">
+            Iniciar Sesión
+          </h1>
+          <p class="text-maya-negro/50 text-sm">
+            Ingresa tus credenciales para continuar.
+          </p>
+        </div>
 
-        <form class="space-y-6 grow flex flex-col justify-center">
-          <!-- Campo Usuario -->
-          <div class="flex flex-col">
-            <label for="username" class="text-maya-azul font-semibold mb-1"
-              >Usuario</label
+        <div
+          id="login-error"
+          class="hidden bg-maya-rojo/10 border border-maya-rojo/20 text-maya-rojo rounded-xl px-4 py-3 text-sm mb-6"
+        >
+          <div class="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              ><circle cx="12" cy="12" r="10"></circle><line
+                x1="12"
+                y1="8"
+                x2="12"
+                y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"
+              ></line></svg
             >
-            <input
-              type="text"
-              id="username"
-              class="w-full border-b border-maya-negro/30 bg-transparent focus:outline-none focus:border-maya-azul py-2 transition-colors text-maya-negro"
-            />
+            <span id="login-error-text"></span>
+          </div>
+        </div>
+
+        <form id="login-form" class="space-y-5">
+          <div>
+            <label
+              for="login-email"
+              class="block text-xs font-semibold text-maya-azul uppercase tracking-wider mb-2"
+            >
+              Correo Electrónico
+            </label>
+            <div class="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-maya-negro/30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                ></path>
+              </svg>
+              <input
+                type="email"
+                id="login-email"
+                required
+                placeholder="tu@correo.com"
+                class="w-full pl-11 pr-4 py-3 bg-white border-2 border-maya-negro/20 rounded-xl focus:outline-none focus:border-maya-azul focus:ring-4 focus:ring-maya-azul/15 transition-all text-maya-negro placeholder:text-maya-negro/35 text-sm shadow-sm"
+              />
+            </div>
           </div>
 
-          <!-- Campo Email -->
-          <div class="flex flex-col">
-            <label for="email" class="text-maya-azul font-semibold mb-1"
-              >Email</label
+          <div>
+            <label
+              for="login-password"
+              class="block text-xs font-semibold text-maya-azul uppercase tracking-wider mb-2"
             >
-            <input
-              type="email"
-              id="email"
-              class="w-full border-b border-maya-negro/30 bg-transparent focus:outline-none focus:border-maya-azul py-2 transition-colors text-maya-negro"
-            />
+              Contraseña
+            </label>
+            <div class="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-maya-negro/30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                ></path>
+              </svg>
+              <input
+                type="password"
+                id="login-password"
+                required
+                placeholder="Tu contraseña"
+                class="w-full pl-11 pr-12 py-3 bg-white border-2 border-maya-negro/20 rounded-xl focus:outline-none focus:border-maya-azul focus:ring-4 focus:ring-maya-azul/15 transition-all text-maya-negro placeholder:text-maya-negro/35 text-sm shadow-sm"
+              />
+              <button
+                type="button"
+                id="login-toggle-password"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-maya-negro/30 hover:text-maya-azul transition-colors p-1"
+                aria-label="Mostrar contraseña"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  id="login-eye-open"
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                  ></path><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  id="login-eye-closed"
+                  class="w-5 h-5 hidden"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                  ></path>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <!-- Campo Contraseña -->
-          <div class="flex flex-col">
-            <label for="password" class="text-maya-azul font-semibold mb-1"
-              >Contraseña</label
-            >
-            <input
-              type="password"
-              id="password"
-              class="w-full border-b border-maya-negro/30 bg-transparent focus:outline-none focus:border-maya-azul py-2 transition-colors text-maya-negro"
-            />
-          </div>
-
-          <!-- Botón Entrar -->
-          <div class="pt-6">
+          <div class="pt-2">
             <button
+              id="login-submit"
               type="submit"
-              class="w-full bg-maya-azul text-white font-bold py-3.5 rounded-xl hover:opacity-90 transition-opacity shadow-md"
+              class="w-full bg-linear-to-r from-maya-verde to-maya-azul text-white font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-maya-verde/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
             >
               Entrar
             </button>
           </div>
         </form>
 
-        <p class="text-center mt-8 text-sm text-maya-negro/60">
-          ¿No tienes una cuenta? <a
+        <p class="text-center mt-8 text-sm text-maya-negro/50">
+          ¿No tienes una cuenta?
+          <a
             href="/register"
-            class="text-maya-azul font-bold hover:underline">Regístrate</a
+            class="text-maya-azul font-bold hover:text-maya-verde transition-colors ml-1"
           >
+            Regístrate
+          </a>
         </p>
       </div>
     </div>
   </main>
 </Layout>
+
+<script>
+  const toggleBtn = document.getElementById("login-toggle-password")!;
+  const passwordInput = document.getElementById(
+    "login-password",
+  ) as HTMLInputElement;
+  const eyeOpen = document.getElementById("login-eye-open")!;
+  const eyeClosed = document.getElementById("login-eye-closed")!;
+
+  toggleBtn.addEventListener("click", () => {
+    const isPassword = passwordInput.type === "password";
+    passwordInput.type = isPassword ? "text" : "password";
+    eyeOpen.classList.toggle("hidden", isPassword);
+    eyeClosed.classList.toggle("hidden", !isPassword);
+  });
+
+  async function handleLogin(e: SubmitEvent) {
+    e.preventDefault();
+
+    const errorEl = document.getElementById("login-error")!;
+    const errorText = document.getElementById("login-error-text")!;
+    const submitBtn = document.getElementById(
+      "login-submit",
+    ) as HTMLButtonElement;
+    const correo = (
+      document.getElementById("login-email") as HTMLInputElement
+    ).value.trim();
+    const contrasena = passwordInput.value;
+
+    errorEl.classList.add("hidden");
+    errorText.textContent = "";
+
+    if (!correo || !contrasena) {
+      errorText.textContent = "Todos los campos son obligatorios.";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Iniciando sesión...";
+
+    try {
+      const { login } = await import("../services/auth");
+      const result = await login(correo, contrasena);
+
+      if (result.success) {
+        window.location.href = "/map";
+      } else {
+        errorText.textContent = result.error || "Credenciales inválidas.";
+        errorEl.classList.remove("hidden");
+      }
+    } catch (err) {
+      errorText.textContent = "Error de conexión. Intenta de nuevo.";
+      errorEl.classList.remove("hidden");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Entrar";
+    }
+  }
+
+  const form = document.getElementById("login-form");
+  if (form) {
+    form.addEventListener("submit", handleLogin);
+  }
+</script>

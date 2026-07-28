@@ -6,8 +6,15 @@
   class="bg-maya-verde text-white md:h-20 flex flex-col md:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 py-3 md:py-0 shadow-md relative z-50"
 >
   <div class="flex justify-between items-center w-full md:w-auto">
-    <a href="/" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-      <img src="/logo.png" alt="Logo Maaya Xíinbal" class="h-16 w-16 drop-shadow-sm" />
+    <a
+      href="/"
+      class="flex items-center gap-3 hover:opacity-90 transition-opacity"
+    >
+      <img
+        src="/logo.png"
+        alt="Logo Maaya Xíinbal"
+        class="h-16 w-16 drop-shadow-sm"
+      />
       <h2 class="text-xl font-bold tracking-wide">Maaya Xíinbal</h2>
     </a>
     <button
@@ -15,9 +22,20 @@
       class="md:hidden p-2 text-white hover:text-maya-amarillo transition-colors focus:outline-none"
       aria-label="Abrir menú"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 32 32"
+      >
         <path d="M0 0h32v32H0z" fill="none"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h22M5 16h22M5 24h22"></path>
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 8h22M5 16h22M5 24h22"></path>
       </svg>
     </button>
   </div>
@@ -26,45 +44,109 @@
     id="nav-menu"
     class="hidden md:flex flex-col md:flex-row w-full md:w-auto items-center gap-6 mt-4 md:mt-0 pb-4 md:pb-0 transition-all duration-300"
   >
-    <ul class="flex flex-col md:flex-row items-center gap-6 font-medium text-sm w-full md:w-auto">
-      <li><a href="/" class="hover:text-maya-amarillo transition-colors block py-2 md:py-0">Inicio</a></li>
-      <li><a href="#about" class="hover:text-maya-amarillo transition-colors block py-2 md:py-0">Acerca de</a></li>
-      <li><a href="#experiences" class="hover:text-maya-amarillo transition-colors block py-2 md:py-0">Experiencias</a></li>
-      <li><a href="/map" class="hover:text-maya-amarillo transition-colors block py-2 md:py-0">Mapa</a></li>
+    <ul
+      class="flex flex-col md:flex-row items-center gap-6 font-medium text-sm w-full md:w-auto"
+    >
+      <li>
+        <a
+          href="/"
+          class="hover:text-maya-amarillo transition-colors block py-2 md:py-0"
+          >Inicio</a
+        >
+      </li>
+      <li>
+        <a
+          href="/#about"
+          class="hover:text-maya-amarillo transition-colors block py-2 md:py-0"
+          >Acerca de</a
+        >
+      </li>
+      <li>
+        <a
+          href="/#experiences"
+          class="hover:text-maya-amarillo transition-colors block py-2 md:py-0"
+          >Experiencias</a
+        >
+      </li>
+      <li>
+        <a
+          href="/map"
+          class="hover:text-maya-amarillo transition-colors block py-2 md:py-0"
+          >Mapa</a
+        >
+      </li>
     </ul>
 
     <div class="hidden md:block w-px h-6 bg-maya-blanco/30"></div>
     <div class="md:hidden w-full h-px bg-maya-blanco/20 my-2"></div>
 
     <div class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-      <!-- TU BOTÓN REAL DE LA IMAGEN image_6aef63.png -->
-      <button
-        id="btn-cambiar-idioma"
-        class="flex items-center gap-1.5 text-sm hover:text-maya-amarillo transition-colors font-semibold group"
-        aria-label="Cambiar idioma"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-        <span id="texto-idioma">ES / MAY</span>
-      </button>
+      <div class="relative" id="lang-selector">
+        <button
+          id="btn-cambiar-idioma"
+          class="flex items-center gap-1.5 text-sm hover:text-maya-amarillo transition-colors font-semibold group"
+          aria-label="Cambiar idioma"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 group-hover:animate-spin-slow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path
+              d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+            ></path>
+          </svg>
+          <span id="texto-idioma">ES / MAY / EN</span>
+          <svg
+            id="lang-arrow"
+            class="w-3 h-3 transition-transform duration-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="3"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 9l-7 7-7-7"></path></svg
+          >
+        </button>
+        <div
+          id="lang-dropdown"
+          class="hidden absolute top-full right-0 mt-2 bg-white rounded-xl shadow-2xl border border-maya-negro/10 py-2 min-w-48 z-50 max-h-72 overflow-y-auto"
+        >
+        </div>
+      </div>
 
       <!-- Div oculto obligatorio para que cargue la API de Google -->
       <div id="google_translate_element" class="hidden"></div>
 
-      <a href="/login" class="bg-maya-amarillo text-maya-negro px-5 py-2 rounded-lg font-bold text-sm hover:bg-maya-rojo hover:text-white transition-all duration-300 shadow-md w-full md:w-auto text-center mt-2 md:mt-0">
-        Iniciar sesión
-      </a>
+      <div
+        id="auth-actions"
+        class="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto"
+      >
+        <a
+          id="auth-link"
+          href="/login"
+          class="bg-maya-amarillo text-maya-negro px-5 py-2 rounded-lg font-bold text-sm hover:bg-maya-rojo hover:text-white transition-all duration-300 shadow-md w-full md:w-auto text-center mt-2 md:mt-0"
+        >
+          Iniciar sesión
+        </a>
+      </div>
     </div>
   </nav>
 </header>
 
 <!-- CSS GLOBAL: Oculta por completo la barra superior gris y los popups feos de Google -->
 <style is:global>
-  .goog-te-banner-frame, 
-  .skiptranslate, 
+  .goog-te-banner-frame,
+  .skiptranslate,
   iframe.goog-te-banner-frame,
   .goog-te-balloon-frame {
     display: none !important;
@@ -78,7 +160,9 @@
     background-color: transparent !important;
     box-shadow: none !important;
   }
-  #goog-gt-tt, .goog-te-balloon-frame, #goog-gt-tt * {
+  #goog-gt-tt,
+  .goog-te-balloon-frame,
+  #goog-gt-tt * {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
@@ -99,54 +183,140 @@
     }
   };
 
-  const setupTraductor = () => {
-    const botonIdioma = document.getElementById("btn-cambiar-idioma");
-    const textoBoton = document.getElementById("texto-idioma");
+  const setupAuthActions = () => {
+    const container = document.getElementById("auth-actions");
+    if (!container) return;
 
-    // Función auxiliar para leer cookies
+    const token = localStorage.getItem("auth_token");
+
+    if (token) {
+      container.innerHTML = `
+        <a href="/profile" class="text-white/80 hover:text-maya-amarillo text-sm font-semibold transition-colors w-full md:w-auto text-center">
+          Mi Perfil
+        </a>
+        <a href="#" id="logout-link" class="bg-maya-amarillo text-maya-negro px-5 py-2 rounded-lg font-bold text-sm hover:bg-maya-rojo hover:text-white transition-all duration-300 shadow-md w-full md:w-auto text-center">
+          Cerrar sesión
+        </a>
+      `;
+      document.getElementById("logout-link")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        localStorage.removeItem("auth_token");
+        window.location.href = "/";
+      });
+    } else {
+      container.innerHTML = `
+        <a href="/login" class="bg-maya-amarillo text-maya-negro px-5 py-2 rounded-lg font-bold text-sm hover:bg-maya-rojo hover:text-white transition-all duration-300 shadow-md w-full md:w-auto text-center mt-2 md:mt-0">
+          Iniciar sesión
+        </a>
+      `;
+    }
+  };
+
+  const setupTraductor = () => {
     const getCookie = (name: string) => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
+      if (parts.length === 2) return parts.pop()?.split(";").shift();
       return null;
     };
 
-    // Al cargar la página, revisamos la cookie para ajustar el texto del botón (ES / MAY)
-    const currentTrans = getCookie('googtrans');
-    if (currentTrans && currentTrans.includes('yua')) {
-      if (textoBoton) textoBoton.innerText = "MAYA / ESP";
-    }
+    const languages = [
+      { code: "es", name: "Español" },
+      { code: "yua", name: "Maya" },
+      { code: "en", name: "English" },
+      { code: "fr", name: "Français" },
+      { code: "de", name: "Deutsch" },
+      { code: "pt", name: "Português" },
+      { code: "it", name: "Italiano" },
+      { code: "zh-CN", name: "中文" },
+      { code: "ja", name: "日本語" },
+    ];
 
-    if (botonIdioma) {
-      const nuevoBoton = botonIdioma.cloneNode(true);
-      botonIdioma.parentNode?.replaceChild(nuevoBoton, botonIdioma);
+    const getCurrentLang = (): string => {
+      const trans = getCookie("googtrans");
+      if (!trans) return "es";
+      const match = trans.match(/\/es\/(\w+(?:-\w+)?)/);
+      return match ? match[1] : "es";
+    };
 
-      nuevoBoton.addEventListener("click", () => {
-        const currentCookie = getCookie('googtrans');
+    const updateButtonText = (currentCode: string) => {
+      const btnText = document.getElementById("texto-idioma");
+      if (!btnText) return;
+      const lang = languages.find((l) => l.code === currentCode);
+      if (lang) {
+        btnText.innerText = lang.name;
+      }
+    };
 
-        if (currentCookie && currentCookie.includes('yua')) {
-          // Si ya está en maya, borramos las cookies de Google para volver a Español
-          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
-          document.cookie = "googtrans=/es/es; path=/;"; // Forzar español
-        } else {
-          // Si está en español, escribimos la cookie oficial para traducir a Maya (/es/yua)
-          document.cookie = "googtrans=/es/yua; path=/;";
-          document.cookie = "googtrans=/es/yua; path=/; domain=" + window.location.hostname;
+    const buildDropdown = () => {
+      const dropdown = document.getElementById("lang-dropdown");
+      if (!dropdown) return;
+      const currentLang = getCurrentLang();
+      dropdown.innerHTML = languages
+        .map(
+          (l) => `
+        <button data-lang="${l.code}" class="lang-option w-full text-left px-4 py-2 text-sm text-maya-negro hover:bg-maya-verde/10 transition-colors flex items-center gap-2 ${l.code === currentLang ? "font-bold bg-maya-verde/5" : ""}">
+          <span class="w-4 text-center text-maya-verde">${l.code === currentLang ? "✓" : ""}</span>
+          ${l.name}
+        </button>
+      `,
+        )
+        .join("");
+
+      dropdown.querySelectorAll(".lang-option").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const code = (btn as HTMLElement).dataset.lang!;
+          document.cookie =
+            code === "es"
+              ? "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+              : `googtrans=/es/${code}; path=/;`;
+          if (code !== "es") {
+            document.cookie =
+              `googtrans=/es/${code}; path=/; domain=` +
+              window.location.hostname;
+          }
+          window.location.reload();
+        });
+      });
+    };
+
+    updateButtonText(getCurrentLang());
+
+    const btn = document.getElementById("btn-cambiar-idioma");
+    const selector = document.getElementById("lang-selector");
+    if (btn && selector) {
+      const newBtn = btn.cloneNode(true) as HTMLElement;
+      btn.parentNode?.replaceChild(newBtn, btn);
+      const arrow = newBtn.querySelector("#lang-arrow") as SVGSVGElement | null;
+
+      newBtn.addEventListener("click", () => {
+        buildDropdown();
+        const dropdown = document.getElementById("lang-dropdown");
+        if (dropdown) {
+          const isHidden = dropdown.classList.contains("hidden");
+          dropdown.classList.toggle("hidden");
+          arrow?.classList.toggle("rotate-180", !isHidden);
         }
+      });
 
-        // Recargamos la página al instante para que Google aplique el idioma de la cookie de golpe
-        window.location.reload();
+      document.addEventListener("click", (e) => {
+        if (!selector.contains(e.target as Node)) {
+          const dropdown = document.getElementById("lang-dropdown");
+          if (dropdown) dropdown.classList.add("hidden");
+          arrow?.classList.remove("rotate-180");
+        }
       });
     }
   };
 
   // Inicializar
   setupMobileMenu();
+  setupAuthActions();
   setupTraductor();
 
   document.addEventListener("astro:after-swap", () => {
     setupMobileMenu();
+    setupAuthActions();
     setupTraductor();
   });
 </script>
